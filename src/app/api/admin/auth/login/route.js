@@ -1,4 +1,4 @@
-// src/api/auth/login.js
+// src/api/admin/auth/login.js
 import connectMongo from '../../../../../lib/mongodb';
 import User from '../../../../../models/User';
 import { comparePassword } from '../../../../../lib/bcrypt';
@@ -27,9 +27,24 @@ export const POST = async (req) => {
       return new Response(JSON.stringify({ success: false, message: 'Invalid Password' }), { status: 401 });
     }
 
+
     const token = generateToken(user);
 
-    return new Response(JSON.stringify({ success: true, token: token }), { status: 200 });
+    const cookieOptions = {
+      httpOnly: process.env.NODE_ENV === 'production',
+      secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
+      maxAge: 3600, // 1 hour
+      sameSite: 'strict', // Adjust according to your needs
+      path: '/', // The path scope of the cookie
+    };
+    return new Response(JSON.stringify({ success: true }), {
+      status: 200,
+      headers: {
+        'Set-Cookie': `token=${token}; ${cookieOptions.httpOnly?"HttpOnly;":""} Max-Age=${cookieOptions.maxAge}; Path=${cookieOptions.path}; ${cookieOptions.secure ? 'Secure;' : ''} SameSite=${cookieOptions.sameSite};`,
+      },
+    });
+
+    // return new Response(JSON.stringify({ success: true, token: token }), { status: 200 });
 
   } catch (error) {
     console.error(error);

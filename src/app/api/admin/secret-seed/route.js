@@ -5,7 +5,6 @@ import { hashPassword } from '@/lib/bcrypt';
 
 export const POST = async (req) => {
     try {
-        console.log("Entered!");
 
         if (req.method !== 'POST') {
             return new Response(JSON.stringify({ success: false, error: 'Method Not Allowed' }), { status: 405 });
