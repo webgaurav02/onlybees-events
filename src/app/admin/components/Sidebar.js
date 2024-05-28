@@ -1,6 +1,11 @@
 import Link from 'next/link'
 import React from 'react'
 
+//Icons
+import AddIcon from '@mui/icons-material/Add';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+
 
 const Sidebar = () => {
     return (
@@ -13,7 +18,8 @@ const Sidebar = () => {
                         </div>
                     </li>
                     <li>
-                        <Link href="/admin/dashboard" className="relative flex flex-row items-center h-11 focus:outline-none text-white-600 hover:text-white-800">
+                        
+                        <Link href="/admin/dashboard" className=" hover:bg-black relative flex flex-row items-center h-11 focus:outline-none text-white-600 hover:text-white-800">
                             <span className="ml-10 text-sm tracking-wide truncate">Dashboard</span>
                         </Link>
                     </li>
@@ -23,18 +29,21 @@ const Sidebar = () => {
                         </div>
                     </li>
                     <li>
-                        <Link href="/admin/dashboard/add-event" className="relative flex flex-row items-center h-11 focus:outline-none text-white-600 hover:text-white-800">
-                            <span className="ml-10 text-sm tracking-wide truncate">Add</span>
+                        <Link href="/admin/dashboard/add-event" className=" hover:bg-black relative flex flex-row gap-2 items-center h-11 focus:outline-none text-white-600 hover:text-white-800">
+                            <AddIcon sx={{ fontSize: 15 }} className='ml-10'/>
+                            <span className="text-sm tracking-wide truncate">Add</span>
                         </Link>
                     </li>
                     <li>
-                        <Link href="/admin/dashboard/edit-event" className="relative flex flex-row items-center h-11 focus:outline-none text-white-600 hover:text-white-800">
-                            <span className="ml-10 text-sm tracking-wide truncate">Edit</span>
+                        <Link href="/admin/dashboard/edit-event" className=" hover:bg-black relative flex flex-row gap-2 items-center h-11 focus:outline-none text-white-600 hover:text-white-800">
+                            <EditIcon sx={{ fontSize: 15 }} className='ml-10'/>
+                            <span className="text-sm tracking-wide truncate">Edit</span>
                         </Link>
                     </li>
                     <li>
-                        <Link href="/admin/dashboard/delete-event" className="relative flex flex-row items-center h-11 focus:outline-none text-white-600 hover:text-white-800">
-                            <span className="ml-10 text-sm tracking-wide truncate">Delete</span>
+                        <Link href="/admin/dashboard/delete-event" className=" hover:bg-black relative flex flex-row gap-2 items-center h-11 focus:outline-none text-white-600 hover:text-white-800">
+                            <DeleteIcon sx={{ fontSize: 15 }} className='ml-10'/>
+                            <span className="text-sm tracking-wide truncate">Delete</span>
                         </Link>
                     </li>
                 </ul>

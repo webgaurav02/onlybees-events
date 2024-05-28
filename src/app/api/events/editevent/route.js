@@ -9,6 +9,7 @@ export const PUT = async (req) => {
 
     // Extract data from request body
     const { id, title, about, venue, city, date, image, quantity, ticketPrice, organizer } = await req.json();
+
     let imageUrl = image;
     let public_id;
 

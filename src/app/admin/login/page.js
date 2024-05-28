@@ -56,7 +56,7 @@ export default function LoginPage() {
                   type="text"
                   name="username"
                   id="username"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-[#1e1e1e] dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-[#00FF38] focus:border-[#00FF38] block w-full p-2.5 dark:bg-[#1e1e1e] dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-[#00FF38] dark:focus:border-[#00FF38]"
                   placeholder="username"
                   required
                   value={username}
@@ -70,7 +70,7 @@ export default function LoginPage() {
                   name="password"
                   id="password"
                   placeholder="••••••••"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-[#1e1e1e] dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-[#00FF38] focus:border-[#00FF38] block w-full p-2.5 dark:bg-[#1e1e1e] dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-[#00FF38] dark:focus:border-[#00FF38]"
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}

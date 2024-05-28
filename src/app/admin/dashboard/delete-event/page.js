@@ -6,10 +6,12 @@ import { useEffect, useState } from 'react';
 //React Toastify
 import { Bounce, toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import showErrorToast from '@/app/components/ErrorToast';
+import showSuccessToast from '@/app/components/SuccessToast';
 
 //Components
 import EventCard from "../../components/EventCard"
-import Loading from '@/app/components/loading';
+import Loading from '@/app/components/Loading';
 
 
 const DeleteEvent = () => {
@@ -39,19 +41,6 @@ const DeleteEvent = () => {
 
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [eventToDelete, setEventToDelete] = useState(null);
-    const showErrorToast = (message) => {
-        toast.error(message, {
-            position: "top-center",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-            transition: Bounce,
-        });
-    }
 
 
     const handleDeleteConfirmation = (id) => {
@@ -75,17 +64,7 @@ const DeleteEvent = () => {
                 if (data.success) {
                     setLoading(false);
                     fetchEvents();
-                    toast.success('Deleted successfully!', {
-                        position: "top-center",
-                        autoClose: 3000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: "dark",
-                        transition: Bounce,
-                    });
+                    showSuccessToast("Deleted Successfully!")
                 }
                 else {
                     setLoading(false);
@@ -115,18 +94,12 @@ const DeleteEvent = () => {
             {loading && <Loading />}
             <h2 className="mb-10 text-center p-2 lg:text-5xl text-3xl font-semibold">Delete Event</h2>
             <div className="events grid w-full mt-5 px-10" style={{ scrollbarWidth: 'none' }}>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 mx-auto">
                     {events.map((event, index) => (
                         <div key={index} className="">
                             <EventCard
-                                key={event}
-                                id={event._id}
-                                image={event.imageUrl}
-                                title={event.title}
-                                date={event.date}
-                                venue={event.venue}
-                                price={event.price}
-                                route={event.route}
+                                key={index}
+                                eventItem={event}
 
                                 delete={true}
                                 handleDeleteConfirmation={handleDeleteConfirmation}

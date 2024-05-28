@@ -1,19 +1,16 @@
-'use client';
-
-import Loading from '@/app/components/Loading';
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 
-
-//React Toastify
-import { Bounce, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import showErrorToast from '@/app/components/ErrorToast';
-import showSuccessToast from '@/app/components/SuccessToast';
+//Components
+import Loading from '@/app/components/Loading';
 
 
-export default function AddEvent() {
+const EditModal = ({ event, onClose, onSave }) => {
+
+    const [loading, setLoading] = useState(false);
+
     const [form, setForm] = useState({
+        id: '',
         organizer: '',
         title: '',
         about: '',
@@ -24,7 +21,24 @@ export default function AddEvent() {
         quantity: 0,
         ticketPrice: 0,
     });
-    const [loading, setLoading] = useState(false);
+
+    let date = new Date(event.date);
+    let formattedDate = date.toLocaleString('en-GB');
+
+    useEffect(() => {
+        setForm({
+            id: event._id,
+            organizer: event.organizer,
+            title: event.title,
+            about: event.about,
+            venue: event.venue,
+            city: event.city,
+            date: event.date,
+            image: event.imageUrl,
+            quantity: event.quantity,
+            ticketPrice: event.ticketPrice,
+        });
+    }, [event]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -40,38 +54,15 @@ export default function AddEvent() {
         reader.readAsDataURL(file);
     };
 
-    const handleSubmit = async (e) => {
-        setLoading(true);
+    const handleSubmit = (e) => {
         e.preventDefault();
-        try {
-            const res = await fetch('/api/events/addevent/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(form),
-            });
-
-            const data = await res.json();
-            if (data.success) {
-                setLoading(false);
-                showSuccessToast('Event created successfully!');
-            } else {
-                setLoading(false);
-                showErrorToast('Error creating event');
-            }
-        } catch (error) {
-            setLoading(false);
-            console.error(error);
-            showErrorToast('Error creating event');
-        }
+        onSave(event.id, form);
     };
-
 
     return (
         <div className="lg:mx-0 mx-5 py-5">
             {loading && <Loading />}
-            <h2 className="my-10 lg:ml-16 ml-5 text-5xl font-medium">Add Event</h2>
+            <h2 className="my-10 lg:ml-16 ml-5 text-5xl font-normal">Edit Event - <span className='font-bold'>{event.title}</span></h2>
             <form
                 className="w-full mx-auto p-5 lg:px-16"
                 onSubmit={handleSubmit}
@@ -132,14 +123,14 @@ export default function AddEvent() {
                             required
                         />
 
-                        <label className="mb-1 font-bold" htmlFor="date">Date</label>
+                        <label className="mb-1 font-bold" htmlFor="date">Date<span className='text-[0.7rem] text-[#00FF38] font-normal'> (Do not change if same)</span></label>
+                        <p className='text-xs text-[#00FF38]'>{formattedDate}</p>
                         <input
-                            className="mb-4 p-2 border bg-[#1b1b1b] border-gray-800 rounded"
+                            className="mt-1 mb-4 p-2 border bg-[#1b1b1b] border-gray-800 rounded"
                             type="date"
                             name="date"
                             value={form.date}
                             onChange={handleChange}
-                            required
                         />
 
                         <label className="mb-1 font-bold" htmlFor="quantity">Ticket Quantity</label>
@@ -163,14 +154,11 @@ export default function AddEvent() {
                             placeholder="Ticket Price"
                             required
                         />
-
-
                     </div>
                     <div className='flex flex-col w-4/3'>
-
-                        <label className="mb-1 font-bold" htmlFor="image">Event Flyer</label>
+                        <label className="mb-1 font-bold" htmlFor="image">Change Event Flyer<span className='text-[0.7rem] text-[#00FF38] font-normal'> (Do not Re-upload if same)</span></label>
                         <Image
-                            src={(form.image!=='')?form.image:'https://img.freepik.com/free-vector/illustration-gallery-icon_53876-27002.jpg'}
+                            src={(form.image!=='')?form.image:event.imageUrl}
                             loading="lazy"
                             width={300}
                             height={300}
@@ -184,31 +172,28 @@ export default function AddEvent() {
                             type="file"
                             name="image"
                             onChange={handleImageChange}
-                            required
                         />
 
                     </div>
                 </div>
-                <button
-                    className="mt-5 p-2 px-12 bg-[#00FF38] text-black font-medium rounded cursor-pointer"
-                    type="submit"
-                >
-                    Add Event
-                </button>
+                <div className="flex justify-start gap-4 mt-4">
+                    <button
+                        type="button"
+                        className="px-4 py-2 bg-gray-700 rounded"
+                        onClick={onClose}
+                    >
+                        Cancel
+                    </button>
+                    <button
+                        type="submit"
+                        className="px-4 py-2 bg-[#00FF38] text-black rounded"
+                    >
+                        Confirm
+                    </button>
+                </div>
             </form>
-            <ToastContainer
-                position="top-center"
-                autoClose={3000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="dark"
-                transition={Bounce}
-            />
         </div>
     );
-}
+};
+
+export default EditModal;
