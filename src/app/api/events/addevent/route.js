@@ -2,17 +2,46 @@ import connectMongo from '../../../../lib/mongodb';
 import Event from '../../../../models/Event';
 import cloudinary from '../../../../lib/cloudinary';
 
+
+
+// Function to generate a unique slug
+const generateUniqueSlug = async (title) => {
+    let slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+    let count = 1;
+    while (true) {
+        const existingEvent = await Event.findOne({ slug });
+        if (!existingEvent) {
+            return slug;
+        }
+        slug = `${slug}-${count}`;
+        count++;
+    }
+};
+
+
 export const POST = async (req) => {
     try {
         // Connect to MongoDB
         await connectMongo();
 
         // Extract data from request body
-        const { organizer, title, about, venue, city, date, image, quantity, ticketPrice } = await req.json();
+        const { organizer, title, about, venue, city, date, image, ticketPhases } = await req.json();
+
+        // Generate a unique slug from the event title
+        const slug = await generateUniqueSlug(title);
 
         // Upload image to Cloudinary
         const uploadResponse = await cloudinary.uploader.upload(image, {
             folder: 'events',
+        });
+
+        // Format the ticket phases
+        const ticketPrice = {};
+        ticketPhases.forEach(phase => {
+            ticketPrice[phase.phaseName] = {
+                quantity: phase.quantity,
+                price: phase.price,
+            };
         });
 
         // Create a new event instance
@@ -25,8 +54,8 @@ export const POST = async (req) => {
             date,
             imageUrl: uploadResponse.secure_url,
             public_id: uploadResponse.public_id,
-            quantity,
             ticketPrice,
+            slug,
         });
 
         // Save the event to MongoDB
