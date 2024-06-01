@@ -8,7 +8,7 @@ export const PUT = async (req) => {
     await connectMongo();
 
     // Extract data from request body
-    const { id, title, about, venue, city, date, image, quantity, ticketPrice, organizer } = await req.json();
+    const { id, title, about, venue, city, date, image, ticketPhases, organizer } = await req.json();
 
     let imageUrl = image;
     let public_id;
@@ -28,6 +28,15 @@ export const PUT = async (req) => {
       }
     }
 
+    // Format the ticket phases
+    const ticketPrice = {};
+    ticketPhases.forEach(phase => {
+        ticketPrice[phase.phaseName] = {
+            quantity: phase.quantity,
+            price: phase.price,
+        };
+    });
+
     // Update the event in MongoDB
     const event = await Event.findByIdAndUpdate(id, {
       title,
@@ -37,7 +46,6 @@ export const PUT = async (req) => {
       date,
       imageUrl,
       public_id,
-      quantity,
       ticketPrice,
       organizer,
     }, { new: true });

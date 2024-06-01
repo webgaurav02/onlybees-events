@@ -16,10 +16,10 @@ const HomeEvent = (props) => {
 
     return (
         <Link
-            href={`/${props.eventItem.route}`}
+            href={`/event/${props.eventItem.slug}`}
             passHref
         >
-            <div className=' w-48 h-auto px-0'>
+            <div className=' w-56 h-auto px-0'>
                 <Image
                     src={(props.eventItem.imageUrl !== null) ? props.eventItem.imageUrl : ""}
                     loading="lazy"
@@ -30,10 +30,10 @@ const HomeEvent = (props) => {
                     alt="Event Flyer"
                     style={{ "boxShadow": "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px", "borderRadius": "8px" }}
                 />
-                <div className=' pl-2 text-left mt-2 font-semibold font-blogger text-xl lg:text-xl lg:leading-snug'>{props.eventItem.title}</div>
-                <div className=' pl-2 text-left font-medium opacity-70 text-[#3f362b] text-sm lg:text-sm lg:leading-snug '>{formattedDate}</div>
-                <div className=' pl-2 text-left font-medium opacity-70 text-[#3f362b] text-sm lg:text-sm lg:leading-snug '>{props.eventItem.venue}</div>
-                <div className=' pl-2 text-left font-medium opacity-70 text-[#3f362b] text-sm lg:text-sm lg:leading-snug '>&#8377;{props.eventItem.ticketPrice}</div>
+                <div className=' pl-3 text-left mt-2 font-medium text-[#3f362b] text-sm lg:text-sm lg:leading-snug '>{formattedDate}</div>
+                <div className=' pl-3 text-left  font-semibold font-blogger text-xl lg:text-xl lg:leading-snug'>{props.eventItem.title}</div>
+                <div className=' pl-3 text-left font-medium opacity-70 text-[#3f362b] text-sm lg:text-sm lg:leading-snug '>{props.eventItem.venue}</div>
+                {/* <div className=' pl-2 text-left font-medium opacity-70 text-[#3f362b] text-sm lg:text-sm lg:leading-snug '>&#8377;{props.eventItem.ticketPrice}</div> */}
             </div>
         </Link>
     )

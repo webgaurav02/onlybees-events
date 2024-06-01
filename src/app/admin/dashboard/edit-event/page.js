@@ -56,8 +56,8 @@ const EditEvent = () => {
 
 
     const handleSaveEvent = async (id ,updatedEvent) => {
+        setLoading(true);
         try {
-            setLoading(true);
             const response = await fetch('/api/events/editevent', {
                 method: 'PUT',
                 headers: {
@@ -70,8 +70,8 @@ const EditEvent = () => {
             if (result.success) {
                 setEvents(events.map(event => event._id === updatedEvent.id ? result.data : event));
                 setShowEditModal(false);
+                alert('Event created successfully!');
                 setLoading(false);
-                showSuccessToast('Event created successfully!');
             } else {
                 setLoading(false);
                 showErrorToast("Some error occured!")
@@ -116,6 +116,19 @@ const EditEvent = () => {
                     </div>
                 </div>
             </div>}
+            <ToastContainer
+                position="top-center"
+                autoClose={3000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="dark"
+                transition={Bounce}
+            />
         </>
     )
 }
