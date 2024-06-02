@@ -1,6 +1,6 @@
 // src/api/admin/secret-seed.js
 import connectMongo from '@/lib/mongodb';
-import User from '@/models/User';
+import Admin from '@/models/Admin';
 import { hashPassword } from '@/lib/bcrypt';
 
 export const POST = async (req) => {
@@ -18,21 +18,21 @@ export const POST = async (req) => {
 
         await connectMongo();
 
-        const existingUser = await User.findOne({ username });
+        const existingAdmin = await Admin.findOne({ username });
 
-        if (existingUser) {
+        if (existingAdmin) {
             return new Response(JSON.stringify({ message: 'User already exists' }), { status: 400 });
         }
 
         const hashedPassword = await hashPassword(password);
 
-        const newUser = new User({
+        const newAdmin = new Admin({
             username,
             password: hashedPassword,
             isAdmin: true,
         });
 
-        await newUser.save();
+        await newAdmin.save();
 
         return new Response(JSON.stringify({ success: true, message: "Admin user created" }), { status: 201 });
 

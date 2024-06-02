@@ -1,6 +1,6 @@
 // src/api/admin/auth/login.js
 import connectMongo from '../../../../../lib/mongodb';
-import User from '../../../../../models/User';
+import Admin from '../../../../../models/Admin';
 import { comparePassword } from '../../../../../lib/bcrypt';
 import { generateToken } from '../../../../../lib/auth';
 
@@ -15,20 +15,20 @@ export const POST = async (req) => {
 
     await connectMongo();
 
-    const user = await User.findOne({ username });
+    const admin = await Admin.findOne({ username });
 
-    if (!user) {
+    if (!admin) {
       return new Response(JSON.stringify({ success: false, message: 'Invalid Username' }), { status: 401 });
     }
 
-    const isValid = await comparePassword(password, user.password);
+    const isValid = await comparePassword(password, admin.password);
 
     if (!isValid) {
       return new Response(JSON.stringify({ success: false, message: 'Invalid Password' }), { status: 401 });
     }
 
 
-    const token = generateToken(user);
+    const token = generateToken(admin);
 
     const cookieOptions = {
       httpOnly: process.env.NODE_ENV === 'production',

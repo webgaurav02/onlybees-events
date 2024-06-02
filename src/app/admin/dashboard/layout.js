@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 // Components
 import Header from '../components/Header';
 import Sidebar from '../components/Sidebar';
+import Loading from '@/app/components/Loading';
 
 
 export default function DashboardPage({ children }) {
@@ -56,7 +57,7 @@ export default function DashboardPage({ children }) {
   }, [router]);
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <Loading />
   }
 
 
