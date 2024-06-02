@@ -11,6 +11,7 @@ import "./EventDetails.css";
 // Components
 import Button from './Button';
 
+// import { useRouter } from 'next/navigation';
 
 
 const EventDetails = (props) => {
@@ -29,6 +30,10 @@ const EventDetails = (props) => {
     };
     const date2 = new Date(props.event.date);
     const formattedDate = date2.toLocaleString('en-US', options);
+
+
+    // const router = useRouter();
+
     
     useEffect(() => {
         const updateWindowWidth = () => {
@@ -109,7 +114,7 @@ const EventDetails = (props) => {
                             <p className="font-semibold lg:text-[0.6rem] text-[0.8rem] lg:ml-0">STARTING</p>
                             <p className="font-semibold lg:text-4xl text-6xl">{getStartingPrice()}</p>
                         </div>
-                        <Button link="/"/>
+                        <Button link={`/event/${props.slug}/ticket`}/>
                     </div>
 
                 </div>

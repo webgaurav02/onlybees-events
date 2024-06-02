@@ -88,7 +88,7 @@ export default function Event({ params }) {
       <Navbar mode="dark" />
       { error && <EventNotFound />}
       { isLoading && <Loading />}
-      { !error && !isLoading && <EventDetails event={eventData} />}
+      { !error && !isLoading && <EventDetails event={eventData} slug={slug} />}
       <Footer mode="dark" />
     </div>
   );
