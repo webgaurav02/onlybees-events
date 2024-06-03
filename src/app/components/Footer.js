@@ -25,7 +25,7 @@ const Footer = (props) => {
                     alt='OnlyBees logo'
                     className='lg:ml-28 foot-logo'
                 />
-                <div className='footer-links flex flex-row lg:gap-40 gap-16 lg:mt-20'>
+                <div className={`footer-links flex flex-row lg:gap-40 gap-16 lg:mt-20 ${props.mode == "dark" ? "text-white" : "text-black"}`}>
                     <div className='Onlybees flex flex-col gap-5'>
                         <div className='font-semibold text-xl'>Onlybees.</div>
                         <Link className='text-xs font-medium' href="https://www.onlybees.in/" rel="noopener noreferrer" target="_blank">About</Link>

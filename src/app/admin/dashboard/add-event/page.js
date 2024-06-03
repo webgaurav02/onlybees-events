@@ -139,6 +139,7 @@ export default function AddEvent() {
                             value={form.about}
                             onChange={handleChange}
                             placeholder="About"
+                            rows={5}
                             required
                         ></textarea>
 

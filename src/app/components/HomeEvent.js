@@ -14,6 +14,14 @@ const HomeEvent = (props) => {
     const date = new Date(props.eventItem.date);
     const formattedDate = date.toLocaleString('en-US', options);
 
+    //Get lowest of all ticket prices
+    const getStartingPrice = () => {
+        const prices = Object.values(props.eventItem.ticketPrice).map(phase => phase.price);
+        const minPrice = Math.min(...prices);
+        return minPrice === 0 ? 'Free Onwards' : `From ₹${minPrice}`;
+    };
+
+
     return (
         <Link
             href={`/event/${props.eventItem.slug}`}
@@ -30,10 +38,10 @@ const HomeEvent = (props) => {
                     alt="Event Flyer"
                     style={{ "boxShadow": "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px", "borderRadius": "8px" }}
                 />
-                <div className=' pl-3 text-left mt-2 font-medium text-[#3f362b] text-sm lg:text-sm lg:leading-snug '>{formattedDate}</div>
+                <div className=' pl-3 text-left mt-3 font-medium text-[#121212] text-sm lg:text-sm lg:leading-snug'>{formattedDate}</div>
                 <div className=' pl-3 text-left  font-semibold font-blogger text-xl lg:text-xl lg:leading-snug'>{props.eventItem.title}</div>
-                <div className=' pl-3 text-left font-medium opacity-70 text-[#3f362b] text-sm lg:text-sm lg:leading-snug '>{props.eventItem.venue}</div>
-                {/* <div className=' pl-2 text-left font-medium opacity-70 text-[#3f362b] text-sm lg:text-sm lg:leading-snug '>&#8377;{props.eventItem.ticketPrice}</div> */}
+                <div className=' pl-3 text-left font-medium text-[#3a3a3a] text-sm lg:text-sm lg:leading-snug '>{props.eventItem.venue}</div>
+                <div className=' pl-3 text-left font-semibold text-[#3a3a3a] text-base lg:text-sm lg:leading-snug mt-1'>{getStartingPrice()}</div>
             </div>
         </Link>
     )

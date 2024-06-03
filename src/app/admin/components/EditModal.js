@@ -140,6 +140,7 @@ const EditModal = ({ event, onClose, onSave }) => {
                             className="mb-4 p-2 border bg-[#1b1b1b] border-gray-800 rounded"
                             name="about"
                             value={form.about}
+                            rows={5}
                             onChange={handleChange}
                             placeholder="About"
                             required
