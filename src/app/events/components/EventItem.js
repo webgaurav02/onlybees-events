@@ -40,10 +40,10 @@ const EventItem = (props) => {
                 />
                 <div className='flex flex-row'>
                     <div className='lg:w-[93%] w-[90%] pr-2'>
-                        <div className=' text-left mt-3 font-semibold font-blogger text-xl lg:text-2xl lg:leading-snug'>{props.eventItem.title}</div>
-                        <div className=' text-left font-semibold text-[#00FF38] text-xs lg:text-sm lg:leading-normal '>{formattedDate}</div>
+                        <div className=' text-left mt-3 font-semibold font-blogger text-xl lg:text-2xl leading-6'>{props.eventItem.title}</div>
+                        <div className=' text-left font-semibold text-[#00FF38] text-xs lg:text-sm lg:leading-normal mt-1'>{formattedDate}</div>
                         <div className=' mt-[0.2rem] text-left font-medium text-xs lg:text-sm lg:leading-normal'>{`${props.eventItem.venue}, ${props.eventItem.city}`}</div>
-                        <div className=' mt-[0.2rem] text-left font-medium opacity-70 text-xs lg:text-sm lg:leading-normal '>{getStartingPrice()}</div>
+                        <div className=' mt-[0.2rem] text-left font-medium text-[#afafaf] text-xs lg:text-sm lg:leading-normal '>{getStartingPrice()}</div>
                     </div>
                     <div className='lg:w-[7%] w-[10%]'>
                         <Image
