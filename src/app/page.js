@@ -15,7 +15,7 @@ import Image from 'next/image';
 
 
 
-const page = () => {
+const Home = () => {
 
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -89,4 +89,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Home;

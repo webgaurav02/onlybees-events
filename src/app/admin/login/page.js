@@ -36,7 +36,7 @@ export default function LoginPage() {
       }
     };
     verifyUser();
-  }, []);
+  }, [router]);
 
 
 
