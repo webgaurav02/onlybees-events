@@ -1,6 +1,8 @@
 import connectMongo from '../../../../lib/mongodb';
 import Event from '../../../../models/Event';
 
+export const dynamic = 'force-dynamic'
+
 export const GET = async (req) => {
   try {
     // Connect to MongoDB

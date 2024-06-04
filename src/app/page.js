@@ -23,7 +23,7 @@ const Home = () => {
   const fetchEvents = async () => {
     try {
       setLoading(true);
-      const response = await fetch('/api/events/fetchevents');
+      const response = await fetch(`/api/events/fetchevents`);
       const result = await response.json();
       if (result.success) {
         setLoading(false);

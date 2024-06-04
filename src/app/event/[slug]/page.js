@@ -64,7 +64,7 @@ export default function Event({ params }) {
 
   const fetchEventData = async (slug) => {
     setIsLoading(true);
-    const res = await fetch(`http://localhost:3000/api/events/eventinfo?slug=${slug}`);
+    const res = await fetch(`/api/events/eventinfo?slug=${slug}`);
     const dataRecv = await res.json();
 
     if (!dataRecv.success) {

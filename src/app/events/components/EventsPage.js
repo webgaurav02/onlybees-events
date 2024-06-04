@@ -41,7 +41,7 @@ const EventsPage = () => {
 
     const fetchCities = async () => {
         try {
-            const response = await fetch('/api/events/fetchcities');
+            const response = await fetch(`/api/events/fetchcities`);
             const result = await response.json();
             if (result.success) {
                 setCities(result.data);
