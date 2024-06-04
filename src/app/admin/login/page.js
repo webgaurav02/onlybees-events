@@ -5,7 +5,7 @@
 import logo from "../../../../public/OnlyBees_light.svg";
 
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from "next/link";
@@ -15,6 +15,32 @@ export default function LoginPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const router = useRouter();
+
+  useEffect(() => {
+    //To verify admin jwt token using cookies
+    const verifyUser = async () => {
+      try {
+        const res = await fetch('/api/admin/auth/verify', {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' },
+        });
+
+        if (res.ok) {
+          router.push('/admin/dashboard');
+        } else {
+          router.push('/admin/login');
+        }
+      } catch (error) {
+        console.error('Failed to verify token', error);
+        router.push('/admin/login');
+      }
+    };
+    verifyUser();
+  }, []);
+
+
+
+
 
   async function handleSubmit(e) {
     e.preventDefault();
