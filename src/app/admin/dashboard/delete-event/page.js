@@ -90,7 +90,7 @@ const DeleteEvent = () => {
 
 
     return (
-        <div className="lg:mx-0 mx-5 pb-5">
+        <div className="lg:mx-0 pb-5 mt-10">
             {loading && <Loading />}
             <h2 className="mb-10 text-center p-2 lg:text-5xl text-3xl font-semibold">Delete Event</h2>
             <div className="events grid w-full mt-5 px-10" style={{ scrollbarWidth: 'none' }}>

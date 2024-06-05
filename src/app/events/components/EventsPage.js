@@ -69,7 +69,7 @@ const EventsPage = () => {
 
 
     return (
-        <div className='text-white lg:py-20 lg:px-60 py-10 px-10'>
+        <div className='text-white lg:py-20 lg:px-60 py-10 px-10 min-h-[70svh]'>
             {loading && <Loading />}
             <div className='flex gap-2 cursor-pointer lg:mb-20 mb-12' onClick={() => setIsModalOpen(true)}>
                 <a className='font-medium lg:text-base text-sm'>Find your city</a>

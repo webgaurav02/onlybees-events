@@ -186,49 +186,6 @@ export default function AddEvent() {
                             required
                         /> */}
 
-                        <label className="mb-1 font-bold" htmlFor="ticketPhases">Tickets</label>
-                        {form.ticketPhases.map((ticketPhase, index) => (
-                            <div key={index} className="mb-1 p-2 border bg-[#1b1b1b] border-gray-800 rounded flex flex-col lg:flex-row gap-3">
-                                <div className='lg:block flex flex-col'>
-                                    <label htmlFor="phaseName" className='ml-1 mb-1 text-sm'>Sale Phase</label>
-                                    <input
-                                        className="mb-2 p-2 border bg-[#1b1b1b] border-gray-800 rounded"
-                                        type="text"
-                                        name="phaseName"
-                                        value={ticketPhase.phaseName}
-                                        onChange={(e) => handleTicketPhaseChange(index, e)}
-                                        placeholder="Sale Phase Name"
-                                        required
-                                    />
-                                </div>
-                                <div className='lg:block flex flex-col'>
-                                    <label htmlFor="quantity" className='ml-1 mb-1 text-sm'>Quantity</label>
-                                    <input
-                                        className="mb-2 p-2 border bg-[#1b1b1b] border-gray-800 rounded"
-                                        type="number"
-                                        name="quantity"
-                                        value={ticketPhase.quantity}
-                                        onChange={(e) => handleTicketPhaseChange(index, e)}
-                                        placeholder="Quantity"
-                                        required
-                                    />
-                                </div>
-                                <div className='lg:block flex flex-col'>
-                                    <label htmlFor="price" className='ml-1 mb-1 text-sm'>Price</label>
-                                    <input
-                                        className="mb-2 p-2 border bg-[#1b1b1b] border-gray-800 rounded"
-                                        type="number"
-                                        name="price"
-                                        value={ticketPhase.price}
-                                        onChange={(e) => handleTicketPhaseChange(index, e)}
-                                        placeholder="Price"
-                                        required
-                                    />
-                                </div>
-                                <button type="button" onClick={() => removeTicketPhase(index)} className="text-red-500">Remove</button>
-                            </div>
-                        ))}
-                        <button type="button" onClick={addTicketPhase} className="w-44 px-2 bg-slate-800 hover:bg-white hover:text-black text-white font-medium rounded">Add Ticket Phase</button>
                     </div>
                     <div className='flex flex-col w-4/3'>
 
@@ -253,12 +210,57 @@ export default function AddEvent() {
 
                     </div>
                 </div>
-                <button
-                    className="mt-20 p-2 px-12 bg-[#00FF38] text-black font-medium rounded cursor-pointer"
-                    type="submit"
-                >
-                    Add Event
-                </button>
+                <label className="mb-1 font-bold" htmlFor="ticketPhases">Tickets</label>
+                {form.ticketPhases.map((ticketPhase, index) => (
+                    <div key={index} className="mb-1 p-2 border bg-[#1b1b1b] border-gray-800 rounded flex flex-col lg:flex-row gap-3 w-fit">
+                        <div className='flex flex-col'>
+                            <label htmlFor="phaseName" className='ml-1 mb-1 text-sm'>Sale Phase</label>
+                            <input
+                                className="mb-2 p-2 border bg-[#1b1b1b] border-gray-800 rounded"
+                                type="text"
+                                name="phaseName"
+                                value={ticketPhase.phaseName}
+                                onChange={(e) => handleTicketPhaseChange(index, e)}
+                                placeholder="Sale Phase Name"
+                                required
+                            />
+                        </div>
+                        <div className='flex flex-col'>
+                            <label htmlFor="quantity" className='ml-1 mb-1 text-sm'>Quantity</label>
+                            <input
+                                className="mb-2 p-2 border bg-[#1b1b1b] border-gray-800 rounded"
+                                type="number"
+                                name="quantity"
+                                value={ticketPhase.quantity}
+                                onChange={(e) => handleTicketPhaseChange(index, e)}
+                                placeholder="Quantity"
+                                required
+                            />
+                        </div>
+                        <div className='flex flex-col'>
+                            <label htmlFor="price" className='ml-1 mb-1 text-sm'>Price</label>
+                            <input
+                                className="mb-2 p-2 border bg-[#1b1b1b] border-gray-800 rounded"
+                                type="number"
+                                name="price"
+                                value={ticketPhase.price}
+                                onChange={(e) => handleTicketPhaseChange(index, e)}
+                                placeholder="Price"
+                                required
+                            />
+                        </div>
+                        <button type="button" onClick={() => removeTicketPhase(index)} className="text-red-500">Remove</button>
+                    </div>
+                ))}
+                <button type="button" onClick={addTicketPhase} className="w-44 px-2 bg-slate-800 hover:bg-white hover:text-black text-white font-medium rounded">Add Ticket Phase</button>
+                <div>
+                    <button
+                        className="mt-20 p-2 px-12 bg-[#00FF38] text-black font-medium rounded cursor-pointer"
+                        type="submit"
+                    >
+                        Add Event
+                    </button>
+                </div>
             </form>
             <ToastContainer
                 position="top-center"

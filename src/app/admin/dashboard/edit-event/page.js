@@ -96,7 +96,7 @@ const EditEvent = () => {
                 onSave={handleSaveEvent}
                 onClose={() => { setShowEditModal(false) }}
             />}
-            {!showEditModal && <div className="lg:mx-0 mb-5 pb-5">
+            {!showEditModal && <div className="lg:mx-0 mb-5 pb-5 mt-10">
                 <h2 className="mb-10 text-center p-2 lg:text-5xl text-3xl font-semibold">Edit Event</h2>
                 <div className="events grid w-full mt-5 px-10" style={{ scrollbarWidth: 'none' }}>
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 mx-auto">

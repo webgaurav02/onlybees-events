@@ -4,7 +4,7 @@ import { PropagateLoader } from 'react-spinners';
 
 const Loading = () => {
     return (
-        <div className="spinner-container">
+        <div className="spinner-container absolute h-[100svh] w-[100svw]">
             <div className="spinner-background" />
             <div className="spinner">
                 <PropagateLoader color="#00FF38" />

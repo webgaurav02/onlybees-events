@@ -89,8 +89,8 @@ const EventDetails = (props) => {
                     </div>
 
                     <div className="scroll-about-text">
-                        <h3 className="lg:text-right ml-2 text-xl font-bold leading-10">About</h3>
                         <div className="overflow-scroll about-text p-4 rounded-2xl min-w-full">
+                        <h3 className="lg:text-right ml-2 text-xl font-bold leading-10">About</h3>
                             <p className="lg:text-right leading-7">{event.about}</p>
                         </div>
                     </div>

@@ -9,7 +9,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 const Sidebar = () => {
     return (
-        <div className="fixed flex flex-col lg:top-14 left-0 w-14 hover:w-64 md:w-64 bg-[#1b1b1b] h-full text-white transition-all duration-300 border-none z-10 sidebar">
+        <div className="fixed flex flex-col lg:top-14 left-0 w-14 hover:w-[15vw] md:w-[15vw] bg-[#1b1b1b] h-full text-white transition-all duration-300 border-none z-10 sidebar">
             <div className="overflow-y-auto overflow-x-hidden flex flex-col justify-between flex-grow">
                 <ul className="flex flex-col py-4 space-y-1">
                     <li className="px-5 hidden md:block">
