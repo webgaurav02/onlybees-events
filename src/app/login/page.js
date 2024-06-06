@@ -12,7 +12,7 @@ import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import { toast, Toaster } from "react-hot-toast";
 
 //Assets
-import logo from "../../../public/Onlybees_light.svg"
+import logo from "../../../public/OnlyBees_light.svg"
 import Image from "next/image";
 
 const Login = () => {
