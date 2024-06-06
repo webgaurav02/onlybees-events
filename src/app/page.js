@@ -48,7 +48,7 @@ const Home = () => {
     return <Loading />
 
   return (
-    <div className='home-page'>
+    <div className='home-page bg-white text-black'>
 
       <Navbar mode="light" />
 
