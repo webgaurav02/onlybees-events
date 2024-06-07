@@ -1,6 +1,6 @@
 "use client"
 
-import { BsFillShieldLockFill } from "react-icons/bs";
+import { BsFillShieldLockFill, BsTelephoneFill } from "react-icons/bs";
 import { CgSpinner } from "react-icons/cg";
 
 import OtpInput from "otp-input-react";
@@ -13,6 +13,7 @@ import { toast, Toaster } from "react-hot-toast";
 
 //Assets
 import logo from "../../../public/OnlyBees_light.svg"
+
 import Image from "next/image";
 
 const LoginPage = () => {
@@ -24,16 +25,13 @@ const LoginPage = () => {
     const [confirmationResult, setConfirmationResult] = useState(null)
 
     useEffect(() => {
-        // Check if window is defined (client-side)
-        if (typeof window !== "undefined") {
-            window.recaptchaVerifier = new RecaptchaVerifier(auth, "recaptcha-container", {
-                size: "invisible",
-                callback: (response) => {
-                    onSignup();
-                },
-                "expired-callback": () => { },
-            });
-        }
+        window.recaptchaVerifier = new RecaptchaVerifier(auth, "recaptcha-container", {
+            size: "invisible",
+            callback: (response) => {
+                onSignup();
+            },
+            "expired-callback": () => { },
+        })
     }, [auth])
 
 
@@ -47,14 +45,11 @@ const LoginPage = () => {
         const formatPh = "+" + ph;
 
         try {
-            if (typeof window !== "undefined") {
-                const confirmation = await signInWithPhoneNumber(auth, formatPh, window.RecaptchaVerifier)
-                setConfirmationResult(confirmation);
-                setLoading(false);
-                setShowOTP(true);
-                toast.success("OTP sent successfully!");
-            }
-
+            const confirmation = await signInWithPhoneNumber(auth, formatPh, window.recaptchaVerifier)
+            setConfirmationResult(confirmation);
+            setLoading(false);
+            setShowOTP(true);
+            toast.success("OTP sent successfully!");
         } catch (error) {
             console.log(error);
             setLoading(false);
@@ -118,8 +113,8 @@ const LoginPage = () => {
                                     otpType="number"
                                     disabled={false}
                                     autoFocus
-                                    style={{ "margin": "0 auto", "padding": "0", "justifyContent": "between", "alignItems": "center" }}
-                                    inputStyles={{ "background": "none", "borderBottom": "solid 1px white", "margin": "1.2rem auto" }}
+                                    style={{"margin":"0 auto", "padding": "0", "justifyContent": "between", "alignItems": "center"}}
+                                    inputStyles={{"background":"none", "borderBottom": "solid 1px white", "margin":"1.2rem auto"}}
                                     className="opt-container text-white"
                                 ></OtpInput>
                                 <button
@@ -133,19 +128,19 @@ const LoginPage = () => {
                                 </button>
                             </div>
                         ) : (
-                            <div className="md:w-[30svw] mx-auto">
+                            <div className="md:w-[20svw] mx-auto">
                                 <PhoneInput country={"in"}
                                     value={ph}
                                     onChange={setPh}
-                                    inputStyle={{ "color": "white", "background": "none", "border": "none" }}
+                                    inputStyle={{ "color": "white", "background": "none", "border": "none", "fontSize": "1.6rem"}}
                                     buttonStyle={{ "background": "none", "border": "none" }}
                                     dropdownStyle={{ "color": "white", "background": "black" }}
                                     autoFocus
                                 />
-                                <hr />
+                                <hr className="mt-1"/>
                                 <button
                                     onClick={onSignup}
-                                    className="mt-5 bg-white w-full flex gap-1 items-center justify-center py-2.5 text-black rounded"
+                                    className="mt-5 bg-[#00FF38] w-full flex gap-1 items-center justify-center py-2.5 text-black rounded"
                                 >
                                     {loading && (
                                         <CgSpinner size={20} className="mt-1 animate-spin" />
