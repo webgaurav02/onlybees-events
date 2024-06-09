@@ -13,7 +13,7 @@ import Loading from '../components/Loading';
 //Context
 import { useAuth } from '@/context/AuthContext';
 
-import logo from "../../../public/Onlybees_light.svg";
+import logo from "../../../public/OnlyBees_light.svg";
 import { toast, Toaster } from "react-hot-toast";
 
 const SignUpPage = () => {
