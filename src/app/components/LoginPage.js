@@ -65,25 +65,29 @@ const LoginPage = () => {
         confirmationResult
             .confirm(otp)
             .then(async () => {
-                login(ph);
-
                 const res = await fetch('/api/auth/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ ph }),
                 });
 
-                if (res.ok) {
+                if (res.ok && res.registered) {
                     setLoading(false);
+                    login(ph, true)
                     router.push('/dashboard')
-                } else {
+                }
+                else if(res.ok && !res.registered){
+                    setLoading(false);
+                    login(ph, false)
+                    router.push('/signup')
+                }
+                else {
                     setLoading(false);
                     setShowOTP(false)
                     setPh(null);
                     setConfirmationResult(null);
                     toast.error("Login failed!");
                 }
-
             })
             .catch((err) => {
                 console.log(err);
@@ -91,12 +95,16 @@ const LoginPage = () => {
             });
     }
 
+    if(user.phone){
+        router.push("/signup")
+    }
+
     return (
         <section className="bg-black flex items-center justify-center h-[90svh]">
             <div className="w-[80svw] flex justify-center">
                 <Toaster toastOptions={{ duration: 4000 }} />
                 <div id="recaptcha-container"></div>
-                {user ? (
+                {user.phone ? (
                     <h2 className="text-center text-white font-medium text-2xl">
                         Login Success!
                     </h2>

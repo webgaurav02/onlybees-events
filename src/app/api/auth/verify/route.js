@@ -19,7 +19,7 @@ export const GET = async (req) => {
     
     return new Response(JSON.stringify({ success: true, user: decoded }), { status: 200 });
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     return new Response(JSON.stringify({ success: false, error: "Server Error" }), { status: 500 });
   }
 };
