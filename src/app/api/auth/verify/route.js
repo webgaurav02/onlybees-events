@@ -9,7 +9,7 @@ export const GET = async (req) => {
       return new Response(JSON.stringify({ success: false, error: 'Method Not Allowed' }), { status: 405 });
     }
 
-    const token = await req.cookies._parsed.get('token').value;
+    const token = await req.cookies._parsed.get('userToken').value;
 
     if (!token) {
       return new Response(JSON.stringify({ success: false, message: 'Unauthorized! No token' }), { status: 401 });

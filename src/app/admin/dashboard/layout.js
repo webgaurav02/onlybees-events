@@ -65,6 +65,7 @@ export default function DashboardPage({ children }) {
 
   }, [router]);
 
+
   if (loading) {
     return <Loading />
   }

@@ -13,8 +13,6 @@ import "react-phone-input-2/lib/style.css";
 import { auth } from "../../../firebase.config";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import { toast, Toaster } from "react-hot-toast";
-import { setCookie } from 'nookies';
-import { generateUserToken } from '../../lib/auth';
 
 import { useRouter } from 'next/navigation';
 
@@ -28,7 +26,7 @@ const LoginPage = () => {
     const router = useRouter();
 
     const { user, login } = useAuth();
-    
+
     const [otp, setOtp] = useState("");
     const [ph, setPh] = useState("");
     const [loading, setLoading] = useState(false);
@@ -68,13 +66,24 @@ const LoginPage = () => {
             .confirm(otp)
             .then(async () => {
                 login(ph);
-                const token = generateUserToken(ph);
-                setCookie(null, 'userToken', token, {
-                    path: '/',
+
+                const res = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ ph }),
                 });
-                toast.success("Logged in successfully!");
-                setLoading(false);
-                router.push('/dashboard')
+
+                if (res.ok) {
+                    setLoading(false);
+                    router.push('/dashboard')
+                } else {
+                    setLoading(false);
+                    setShowOTP(false)
+                    setPh(null);
+                    setConfirmationResult(null);
+                    toast.error("Login failed!");
+                }
+
             })
             .catch((err) => {
                 console.log(err);
@@ -124,8 +133,8 @@ const LoginPage = () => {
                                     otpType="number"
                                     disabled={false}
                                     autoFocus
-                                    style={{"margin":"0 auto", "padding": "0", "justifyContent": "between", "alignItems": "center"}}
-                                    inputStyles={{"background":"none", "borderBottom": "solid 1px white", "margin":"1.2rem auto"}}
+                                    style={{ "margin": "0 auto", "padding": "0", "justifyContent": "between", "alignItems": "center" }}
+                                    inputStyles={{ "background": "none", "borderBottom": "solid 1px white", "margin": "1.2rem auto" }}
                                     className="opt-container text-white"
                                 ></OtpInput>
                                 <button
@@ -143,12 +152,12 @@ const LoginPage = () => {
                                 <PhoneInput country={"in"}
                                     value={ph}
                                     onChange={setPh}
-                                    inputStyle={{ "color": "white", "background": "none", "border": "none", "fontSize": "1.6rem"}}
+                                    inputStyle={{ "color": "white", "background": "none", "border": "none", "fontSize": "1.6rem" }}
                                     buttonStyle={{ "background": "none", "border": "none" }}
                                     dropdownStyle={{ "color": "white", "background": "black" }}
                                     autoFocus
                                 />
-                                <hr className="mt-1"/>
+                                <hr className="mt-1" />
                                 <button
                                     onClick={onSignup}
                                     className="mt-5 bg-[#00FF38] w-full flex gap-1 items-center justify-center py-2.5 text-black rounded"
