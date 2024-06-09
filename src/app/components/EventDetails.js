@@ -70,6 +70,15 @@ const EventDetails = (props) => {
         return minPrice === 0 ? 'Free' : `₹${minPrice}`;
     };
 
+    // Helper function to convert new lines to <br/>
+    const formatAboutText = (text) => {
+        return text.split('\n').map((line, index) => (
+            <span key={index}>
+                {line}
+                <br />
+            </span>
+        ));
+    };
 
     return (
         <div className="event-container bg-black">
@@ -91,7 +100,7 @@ const EventDetails = (props) => {
                     <div className="scroll-about-text">
                         <h3 className="lg:text-right ml-2 text-xl font-bold leading-10">About</h3>
                         <div className="overflow-scroll about-text p-4 rounded-2xl min-w-full">
-                            <p className="lg:text-right leading-7">{event.about}</p>
+                            <p className="lg:text-right leading-7">{formatAboutText(event.about)}</p>
                         </div>
                     </div>
                 </div>

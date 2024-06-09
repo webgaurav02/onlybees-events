@@ -1,15 +1,22 @@
 "use client"
-
-import { BsFillShieldLockFill, BsTelephoneFill } from "react-icons/bs";
-import { CgSpinner } from "react-icons/cg";
-
-import OtpInput from "otp-input-react";
 import { useState, useEffect } from "react";
+
+//Context
+import { useAuth } from '@/context/AuthContext';
+
+
+import { BsFillShieldLockFill } from "react-icons/bs";
+import { CgSpinner } from "react-icons/cg";
+import OtpInput from "otp-input-react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { auth } from "../../../firebase.config";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import { toast, Toaster } from "react-hot-toast";
+import { setCookie } from 'nookies';
+import { generateUserToken } from '../../lib/auth';
+
+import { useRouter } from 'next/navigation';
 
 //Assets
 import logo from "../../../public/OnlyBees_light.svg"
@@ -17,11 +24,15 @@ import logo from "../../../public/OnlyBees_light.svg"
 import Image from "next/image";
 
 const LoginPage = () => {
+
+    const router = useRouter();
+
+    const { user, login } = useAuth();
+    
     const [otp, setOtp] = useState("");
     const [ph, setPh] = useState("");
     const [loading, setLoading] = useState(false);
     const [showOTP, setShowOTP] = useState(false);
-    const [user, setUser] = useState(null);
     const [confirmationResult, setConfirmationResult] = useState(null)
 
     useEffect(() => {
@@ -35,15 +46,10 @@ const LoginPage = () => {
     }, [auth])
 
 
+
     const onSignup = async () => {
-
         setLoading(true);
-        // onCaptchVerify();
-
-        // const appVerifier = window.recaptchaVerifier;
-
         const formatPh = "+" + ph;
-
         try {
             const confirmation = await signInWithPhoneNumber(auth, formatPh, window.recaptchaVerifier)
             setConfirmationResult(confirmation);
@@ -60,10 +66,15 @@ const LoginPage = () => {
         setLoading(true);
         confirmationResult
             .confirm(otp)
-            .then(async (res) => {
-                console.log(res);
-                setUser(res.user);
+            .then(async () => {
+                login(ph);
+                const token = generateUserToken(ph);
+                setCookie(null, 'userToken', token, {
+                    path: '/',
+                });
+                toast.success("Logged in successfully!");
                 setLoading(false);
+                router.push('/dashboard')
             })
             .catch((err) => {
                 console.log(err);
@@ -78,7 +89,7 @@ const LoginPage = () => {
                 <div id="recaptcha-container"></div>
                 {user ? (
                     <h2 className="text-center text-white font-medium text-2xl">
-                        👍Login Success
+                        Login Success!
                     </h2>
                 ) : (
                     <div className="w-[80svw] flex flex-col gap-4 rounded-lg">
