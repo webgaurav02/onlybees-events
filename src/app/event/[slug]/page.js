@@ -9,7 +9,8 @@ import Footer from "../../components/Footer";
 import Loading from "@/app/components/Loading";
 import EventNotFound from "@/app/components/EventNotFound";
 
-
+//Context
+import { useEvent } from "@/context/EventContext";
 
 
 // export const metadata = {
@@ -51,44 +52,39 @@ import EventNotFound from "@/app/components/EventNotFound";
 
 
 
-
-
-
-
 export default function Event({ params }) {
 
   const { slug } = params;
-  const [ eventData, setEventData ] = useState(null);
-  const [ error, setError ] = useState(null);
-  const [ isLoading, setIsLoading ] = useState(true);
+  // const [ eventData, setEventData ] = useState(null);
+  // const [ error, setError ] = useState(null);
+  // const [ isLoading, setIsLoading ] = useState(true);
+  const { eventData, error, isLoading, fetchEventData } = useEvent();
 
-  const fetchEventData = async (slug) => {
-    setIsLoading(true);
-    const res = await fetch(`/api/events/eventinfo?slug=${slug}`);
-    const dataRecv = await res.json();
+  // const fetchEventData = async (slug) => {
+  //   setIsLoading(true);
+  //   const res = await fetch(`/api/events/eventinfo?slug=${slug}`);
+  //   const dataRecv = await res.json();
 
-    if (!dataRecv.success) {
-      setIsLoading(false);
-      throw new Error('Event not found');
-    }
-    setIsLoading(false);
-    return dataRecv.data;
-  }
+  //   if (!dataRecv.success) {
+  //     setIsLoading(false);
+  //     throw new Error('Event not found');
+  //   }
+  //   setIsLoading(false);
+  //   return dataRecv.data;
+  // }
 
   useEffect(() => {
-    fetchEventData(slug)
-      .then(setEventData)
-      .catch(setError);
-  }, [slug]);
+    fetchEventData(slug);
+  }, [slug, fetchEventData]);
 
 
 
   return (
     <div className="bg-black text-white">
       <Navbar mode="dark" />
-      { error && <EventNotFound />}
-      { isLoading && <Loading />}
-      { !error && !isLoading && <EventDetails event={eventData} slug={slug} />}
+      {error && <EventNotFound />}
+      {isLoading && <Loading />}
+      {!error && !isLoading && eventData && <EventDetails event={eventData} slug={slug} />}
       <Footer mode="dark" />
     </div>
   );

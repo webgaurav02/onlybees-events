@@ -3,7 +3,9 @@ import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
-import { AuthProvider, useAuth } from '../context/AuthContext';
+//Context
+import { AuthProvider } from '../context/AuthContext';
+import { EventProvider } from '../context/EventContext';
 
 export const metadata = {
   title: "Onlybees Events",
@@ -17,11 +19,11 @@ export default function RootLayout({ children }) {
       </head>
       <body className={inter.className}>
         <AuthProvider>
-          {children}
+          <EventProvider>
+            {children}
+          </EventProvider>
         </AuthProvider>
       </body>
-      {/* <script src="../path/to/flowbite/dist/flowbite.min.js"></script> */}
-
     </html>
   );
 }

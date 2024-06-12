@@ -123,7 +123,7 @@ const EventDetails = (props) => {
                             <p className="font-semibold lg:text-[0.6rem] text-[0.8rem] lg:ml-0">STARTING</p>
                             <p className="font-semibold lg:text-4xl text-6xl">{getStartingPrice()}</p>
                         </div>
-                        <Button link={`/event/${props.slug}/not-found`}/>
+                        <Button link={`/event/${props.slug}/ticket`}/>
                     </div>
 
                 </div>
