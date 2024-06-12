@@ -11,7 +11,7 @@ const UnderDev = () => {
         <div className='min-h-[80svh] flex flex-col gap-5 justify-center items-center'>
             <h1 className='text-9xl font-mono'>404</h1>
             <h2 className='text-md w-3/4 text-center font-semibold uppercase'>The dev team is working hard to bring this page back to life</h2>
-            <p className=''>meanwhile, why don't you try going</p>
+            <p className=''>meanwhile, why don&apos;t you try going</p>
             <Link
                 href="/"
                 passHref
