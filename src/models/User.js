@@ -10,8 +10,8 @@ const bookingSchema = new mongoose.Schema({
 
 const UserSchema = new mongoose.Schema({
   phone: { type: String, required: true, unique: true },
-  firstName: String,
-  lastName: String,
+  firstname: { type: String, required: true },
+  lastname: { type: String },
   email: { type: String, unique: true },
   bookings: [bookingSchema], // Array of booking subdocuments
   createdAt: { type: Date, default: Date.now },

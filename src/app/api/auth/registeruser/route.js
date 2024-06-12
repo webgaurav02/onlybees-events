@@ -12,7 +12,7 @@ export const POST = async (req) => {
         const { firstname, lastname, email, phoneNumber } = await req.json();
 
         // Validate the input
-        if (!firstname || !lastname || !phoneNumber) {
+        if (!firstname || !phoneNumber) {
             return new Response(JSON.stringify({ success: false, error: 'Missing required fields' }), { status: 400 });
         }
 

@@ -6,6 +6,9 @@ import { useEffect, useState } from "react";
 import { usePathname } from 'next/navigation'
 import { FaBars, FaTimes } from 'react-icons/fa';
 
+//Toast
+import { toast, Toaster } from "react-hot-toast";
+
 // MUI icons
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
@@ -20,14 +23,18 @@ import light from "../../../public/OnlyBees_light.svg";
 
 // Context
 import { useAuth } from '@/context/AuthContext';
+import LogoutConfirmation from "./LogoutConfirmation";
 
 
 
 const DropdownMenu = (props) => {
 
+    const { user } = useAuth();
+
     //Material UI dropdown
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
+
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -37,8 +44,9 @@ const DropdownMenu = (props) => {
         setAnchorEl(null);
     };
 
+
     return (
-        <div className="lg:ml-0 ml-8">
+        <div className="lg:ml-0 ml-8 md:mt-0 mt-1">
             <Button
                 id="basic-button"
                 aria-controls={open ? 'basic-menu' : undefined}
@@ -47,9 +55,9 @@ const DropdownMenu = (props) => {
                 onClick={handleClick}
             >
                 <div className="hidden md:block">
-                    <AccountCircleIcon size={40} sx={{ color: `${props.mode == "dark" ? "white" : "black"}` }}/>
+                    <AccountCircleIcon size={40} sx={{ color: `${props.mode == "dark" ? "white" : "black"}` }} />
                 </div>
-                <span className={`md:hidden normal-case font-semibold text-base ${props.mode == "dark" ? "text-white" : "text-black"}`}>Account</span>
+                <span className={`md:hidden normal-case font-semibold lg:text-base text-lg ${props.mode == "dark" ? "text-white" : "text-black"}`}>Account</span>
             </Button>
             <Menu
                 id="basic-menu"
@@ -60,9 +68,20 @@ const DropdownMenu = (props) => {
                     'aria-labelledby': 'basic-button',
                 }}
             >
-                <Link href="/dashboard"> <MenuItem onClick={handleClose}>Profile</MenuItem> </Link>
+                <div className="px-4 py-2">
+                    <span className="text-lg font-semibold text-gray-600">Hi! {user.userData.firstname}</span>
+                </div>
+                <hr className="mb-1"/>
                 <Link href="/dashboard"> <MenuItem onClick={handleClose}>My account</MenuItem> </Link>
-                <Link href="/dashboard"> <MenuItem onClick={handleClose}>Logout</MenuItem> </Link>
+                <span
+                    onClick={() => { 
+                        props.handleSetLogoutModal();
+                        handleClose();
+                     }}
+                     className="m-0 p-0"
+                >
+                    <MenuItem className="px-2"><span className="font-bold text-sm">LOGOUT</span></MenuItem>
+                </span>
             </Menu>
         </div>
     );
@@ -76,7 +95,8 @@ const Navbar = (props) => {
 
 
     //Context state user
-    const { user, login } = useAuth();
+    const { user, login, logout } = useAuth();
+    const [logoutModal, setLogoutModal] = useState(false);
 
     //To verify user jwt token using cookies
     const verifyUser = async () => {
@@ -87,13 +107,17 @@ const Navbar = (props) => {
             });
             if (res.ok) {
                 const data = await res.json();
-                login(data.user.phone, true);
+                login(data.user, true);
                 setLoading(false);
             }
         } catch (error) {
             return
         }
     };
+
+    const handleSetLogoutModal = () => {
+        setLogoutModal(true);
+    }
 
     const pathname = usePathname()
     const [isOpen, setIsOpen] = useState(false);
@@ -110,9 +134,35 @@ const Navbar = (props) => {
     //     console.log(user);
     // }, [user])
 
+    const handleLogout = async () => {
+        setLogoutModal(false);
+        try {
+            const res = await fetch('/api/auth/logout', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+            });
+            if (res.ok) {
+                logout();
+                toast.success("Logged out user!")
+            }
+        } catch (error) {
+            console.log(error)
+            toast.error("Failed to logout user!")
+        }
+    }
+
 
     return (
         <nav className={`${props.mode == "dark" ? "bg-black text-white border-white" : "bg-none border-black text-black"} nav border-b border-solid md:mx-10 py-5 mx-5 md:pr-2`}>
+            {logoutModal && <LogoutConfirmation
+                title="Logout Account"
+                message="Are you sure you want to logout? Click confirm to logout"
+                handleCancel={() => {
+                    setLogoutModal(false);
+                }}
+                handleConfirm={handleLogout}
+            />}
+            <Toaster toastOptions={{ duration: 4000 }} />
             <div className="flex justify-between items-center">
                 <Link href="/" passHref>
                     <Image
@@ -134,9 +184,9 @@ const Navbar = (props) => {
                     <Link href="/shop" className={`md:text-sm block md:px-4 py-3 ml-10 md:ml-0 md:py-0 ${pathname === '/shop' ? 'underline underline-offset-8' : ''}`}>Shop</Link>
                     <Link href="/artist" className={`md:text-sm block md:px-4 py-3 ml-10 md:ml-0 md:py-0 ${pathname === '/artist' ? 'underline underline-offset-8' : ''}`}>Artist</Link>
                     <Link href="/blog" className={`md:text-sm block md:px-4 lg:pr-5 py-3 ml-10 md:ml-0 md:py-0 ${pathname === '/blog' ? 'underline underline-offset-8' : ''}`}>Blog</Link>
-                    {user.phone && <DropdownMenu mode={props.mode}/>}
+                    {user.userData && <DropdownMenu mode={props.mode} handleSetLogoutModal={handleSetLogoutModal} />}
                     <div className="text-center mt-20 lg:mt-0">
-                        {!user.phone && <Link href="/login" className={`md:text-xs ${props.mode == "dark" ? "bg-white text-black" : "bg-black text-white"} lg:px-8 px-12 py-2 rounded-full`} >Login</Link>}
+                        {!user.userData && <Link href="/login" className={`md:text-xs ${props.mode == "dark" ? "bg-white text-black" : "bg-black text-white"} lg:px-8 px-12 py-2 rounded-full`} >Login</Link>}
                     </div>
                 </div>
             </div>
