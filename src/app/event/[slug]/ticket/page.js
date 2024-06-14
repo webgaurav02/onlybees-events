@@ -25,7 +25,7 @@ const Ticket = ({ params }) => {
         }
     }, [slug, fetchEventData]);
 
-    console.log(slug);
+    // console.log(slug);
 
 
     return (
@@ -33,7 +33,6 @@ const Ticket = ({ params }) => {
             {error && <EventNotFound />}
             {isLoading && <Loading />}
             {!error && !isLoading && eventData && <TicketPage event={eventData} slug={slug} />}
-            <Footer mode="dark" />
         </div>
     )
 }

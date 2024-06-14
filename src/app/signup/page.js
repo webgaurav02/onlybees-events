@@ -22,21 +22,26 @@ const SignUpPage = () => {
     const router = useRouter();
 
     const { user, login } = useAuth();
+    const [loading, setLoading] = useState(false);
 
     //To verify user jwt token using cookies
     const verifyUser = async () => {
+        setLoading(true);
         try {
             const res = await fetch('/api/auth/verify', {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' },
             });
             if (res.ok) {
-                const data = await res.json();
                 setCookieExists(true);
+                setLoading(false);
+            }
+            else{
                 setLoading(false);
             }
         } catch (error) {
             setCookieExists(false);
+            setLoading(false);
         }
     };
 
@@ -54,7 +59,6 @@ const SignUpPage = () => {
         email: '',
         phoneNumber: user.phone,
     });
-    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         console.log(user)

@@ -90,8 +90,14 @@ const LoginPage = () => {
                 }
             })
             .catch((err) => {
-                console.log(err);
                 setLoading(false);
+                console.log("Entered Error!")
+                if (err.code === 'auth/invalid-verification-code') {
+                    toast.error("Invalid OTP!")
+                } else {
+                    console.error("Unexpected error during OTP confirmation:", err);
+                    toast.error("An unexpected error occurred. Please try again.");
+                }
             });
     }
 
