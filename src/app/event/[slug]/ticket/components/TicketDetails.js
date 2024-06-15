@@ -135,7 +135,7 @@ const TicketDetails = ({ event, tickets, convFee, platformFee, totalAmt }) => {
                                 className="px-0 border-b border-white sm:text-sm focus:outline-none focus:ring-none block w-full p-2.5 bg-black placeholder-gray-400 text-white"
                                 required
                             />
-                            <span className='text-[0.7rem]'><span className='text-[#00FF38]'>Note</span> : You'll receive a copy of the tickets here</span>
+                            <span className='text-[0.7rem]'><span className='text-[#00FF38]'>Note</span> : You&apos;ll receive a copy of the tickets here</span>
                         </div>
                         <div className=''>
                             <label htmlFor="phone" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone :</label>
@@ -152,7 +152,7 @@ const TicketDetails = ({ event, tickets, convFee, platformFee, totalAmt }) => {
                         </div>
                     </form>
                     <div className='md:p-10 md:w-3/4'>
-                        <p className='font-light text-[0.9rem]'>By purchasing you'll receive an account, and agree to our general <a className='text-[#00FF38]' href="/terms" target='_blank' rel='noopener noreferrer'>Terms of use</a>, <a className='text-[#00FF38]' href="/privacy" target='_blank' rel='noopener noreferrer'>Privacy Policy</a> and the <a className='text-[#00FF38]' href="/ticket-terms" target='_blank' rel='noopener noreferrer'>Ticket Purchase Terms</a>. We process your personal data in accordance with out <a className='text-[#00FF38]' href="/privacy" target='_blank' rel='noopener noreferrer'>Privacy Policy</a>.</p>
+                        <p className='font-light text-[0.9rem]'>By purchasing you&apos;ll receive an account, and agree to our general <a className='text-[#00FF38]' href="/terms" target='_blank' rel='noopener noreferrer'>Terms of use</a>, <a className='text-[#00FF38]' href="/privacy" target='_blank' rel='noopener noreferrer'>Privacy Policy</a> and the <a className='text-[#00FF38]' href="/ticket-terms" target='_blank' rel='noopener noreferrer'>Ticket Purchase Terms</a>. We process your personal data in accordance with out <a className='text-[#00FF38]' href="/privacy" target='_blank' rel='noopener noreferrer'>Privacy Policy</a>.</p>
                     </div>
                 </div>
             </div>
