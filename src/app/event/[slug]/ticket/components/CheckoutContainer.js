@@ -24,7 +24,7 @@ const CheckoutContainer = ({ totalAmt, handleCheckout, page, setPage, subtotal, 
       // handleTotal();
       setPage("details")
     }
-    else if(page === "details" && totalAmt!==0){
+    else if(page === "details" && anySelected){
       handleCheckout();
     }
   }
