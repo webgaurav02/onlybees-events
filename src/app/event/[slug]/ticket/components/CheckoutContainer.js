@@ -1,14 +1,26 @@
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 //Components
 
 
 
-const CheckoutContainer = ({ totalAmt, handleCheckout, page, setPage, subtotal }) => {
+const CheckoutContainer = ({ totalAmt, handleCheckout, page, setPage, subtotal, tickets }) => {
+
+  const [anySelected, setAnySelected] = useState(false)
+
+  useEffect( () => {
+    const selectedTickets = tickets.filter(ticket => ticket.selected >= 1);
+    if(selectedTickets.length > 0){
+        setAnySelected(true)
+    }
+    else{
+      setAnySelected(false)
+    }
+  }, [tickets])
 
   const handleButton = () => {
-    if(page === "ticket" && totalAmt!==0){
+    if(page === "ticket" && anySelected){
       // handleTotal();
       setPage("details")
     }
@@ -25,7 +37,7 @@ const CheckoutContainer = ({ totalAmt, handleCheckout, page, setPage, subtotal }
             <h1 className='text-3xl'>₹{(page==='ticket'?subtotal:totalAmt)}</h1>
         </div>
         <div>
-            <button className='py-3 px-7 bg-[#00FF38] text-black font-medium rounded-full' onClick={handleButton}>{(page==='ticket'?"Proceed":"Checkout")}</button>
+            <button className={`${!anySelected?"opacity-50":""} py-3 px-7 bg-[#00FF38] text-black font-medium rounded-full`} onClick={handleButton}>{(page==='ticket'?"Proceed":"Checkout")}</button>
         </div>
     </div>
   )

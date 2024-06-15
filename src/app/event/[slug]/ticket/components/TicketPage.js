@@ -122,6 +122,7 @@ const Ticket = ({ event }) => {
         page={page}
         setPage={setPage}
         subtotal={subtotal}
+        tickets={tickets}
       />
     </>
   );
