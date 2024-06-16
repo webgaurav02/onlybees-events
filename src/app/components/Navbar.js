@@ -130,9 +130,9 @@ const Navbar = (props) => {
         verifyUser();
     }, [])
 
-    // useEffect(() => {
-    //     console.log(user);
-    // }, [user])
+    useEffect(() => {
+        console.log(user);
+    }, [user])
 
     const handleLogout = async () => {
         setLogoutModal(false);

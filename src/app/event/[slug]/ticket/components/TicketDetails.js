@@ -1,21 +1,68 @@
 'use client'
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import PhoneInput from 'react-phone-input-2';
 import "react-phone-input-2/lib/style.css";
 
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+
+import { useAuth } from '@/context/AuthContext';
 
 //Accordion
 import { Accordion, AccordionItem, AccordionItemHeading, AccordionItemButton, AccordionItemPanel } from 'react-accessible-accordion';
 
 const TicketDetails = ({ event, tickets, convFee, platformFee, totalAmt }) => {
 
+    const { user, login } = useAuth();
+    const [ph, setPh] = useState("");
 
-    useEffect( () => {
-        // handleTotal();
+    const [form, setForm] = useState({
+        firstname: null,
+        lastname: null,
+        email: null,
+    });
+
+    //To verify user jwt token using cookies
+    const verifyUser = async () => {
+        try {
+            const res = await fetch('/api/auth/verify', {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' },
+            });
+            if (res.ok) {
+                const data = await res.json();
+                login(data.user, true);
+                setLoading(false);
+            }
+        } catch (error) {
+            return
+        }
+    };
+
+    //If user exists
+    useEffect(() => {
+        verifyUser();
     }, [])
+
+    useEffect(() => {
+        if (user.userData) {
+            console.log(user.userData);
+            setForm({
+                firstname: user.userData.firstname || null,
+                lastname: user.userData.lastname || null,
+                email: user.userData.email || null,
+            });
+            setPh(user.userData.phone)
+        }
+    }, [user])
+
+    //Change state on input change
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setForm((prevForm) => ({ ...prevForm, [name]: value }));
+        console.log(form);
+    };
 
     //To get formatted date
     const options = {
@@ -101,8 +148,8 @@ const TicketDetails = ({ event, tickets, convFee, platformFee, totalAmt }) => {
                                     type="text"
                                     name="firstname"
                                     id="firstname"
-                                    // value={form.firstname}
-                                    // onChange={handleChange}
+                                    value={form.firstname || ''}
+                                    onChange={handleChange}
                                     className="px-0 border-b border-white sm:text-sm focus:outline-none focus:ring-none block w-full p-2.5 bg-black placeholder-gray-400 text-white"
                                     placeholder="First Name"
                                     required
@@ -114,8 +161,8 @@ const TicketDetails = ({ event, tickets, convFee, platformFee, totalAmt }) => {
                                     type="text"
                                     name="lastname"
                                     id="lastname"
-                                    // value={form.lastname}
-                                    // onChange={handleChange}
+                                    value={form.lastname || ''}
+                                    onChange={handleChange}
                                     className="px-0 border-b border-white sm:text-sm focus:outline-none focus:ring-none block w-full p-2.5 bg-black placeholder-gray-400 text-white"
                                     placeholder="Last Name"
                                     required
@@ -129,8 +176,8 @@ const TicketDetails = ({ event, tickets, convFee, platformFee, totalAmt }) => {
                                 type="email"
                                 name="email"
                                 id="email"
-                                // value={form.email}
-                                // onChange={handleChange}
+                                value={form.email || ''}
+                                onChange={handleChange}
                                 placeholder="Eg: onlybees@email.com"
                                 className="px-0 border-b border-white sm:text-sm focus:outline-none focus:ring-none block w-full p-2.5 bg-black placeholder-gray-400 text-white"
                                 required
@@ -140,8 +187,8 @@ const TicketDetails = ({ event, tickets, convFee, platformFee, totalAmt }) => {
                         <div className=''>
                             <label htmlFor="phone" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone :</label>
                             <PhoneInput country={"in"}
-                                // value={ph}
-                                // onChange={setPh}
+                                value={ph || ''}
+                                onChange={setPh}
                                 inputStyle={{ "color": "white", "background": "none", "border": "none", "fontSize": "1rem" }}
                                 buttonStyle={{ "background": "none", "border": "none" }}
                                 dropdownStyle={{ "color": "white", "background": "black" }}

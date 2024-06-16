@@ -61,7 +61,7 @@ const SignUpPage = () => {
     });
 
     useEffect(() => {
-        console.log(user)
+        // console.log(user)
         if (user) {
             setForm(prevForm => ({
                 ...prevForm,
