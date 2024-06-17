@@ -1,38 +1,6 @@
-// import nodemailer from 'nodemailer';
-// import dotenv from 'dotenv';
-
-// dotenv.config();
-
-// const transporter = nodemailer.createTransport({
-//     service: 'gmail', // Use 'gmail' or another email service
-//     auth: {
-//         user: process.env.EMAIL_USER, // Your email address
-//         pass: process.env.EMAIL_PASS, // Your email password or app-specific password
-//     },
-// });
-
-// export const sendTicketEmail = async (email, ticketDetails) => {
-//     const mailOptions = {
-//         from: process.env.EMAIL_USER, // Your email address
-//         to: email, // Recipient's email address
-//         subject: 'Your Ticket Details',
-//         text: `Thank you for your purchase. Here are your ticket details: ${JSON.stringify(ticketDetails)}`,
-//         html: `<strong>Thank you for your purchase. Here are your ticket details:</strong><br>${JSON.stringify(ticketDetails)}`,
-//     };
-
-//     try {
-//         await transporter.sendMail(mailOptions);
-//         console.log('Email sent');
-//     } catch (error) {
-//         console.error('Error sending email:', error);
-//     }
-// };
-
-
-// lib/sendEmail.js
 import nodemailer from 'nodemailer';
 
-export const sendEmail = async (to, subject, html) => {
+export const sendEmail = async (to, subject, htmlContent, pdfBuffer, qrCodeBuffer) => {
     try {
         // Create a transporter
         const transporter = nodemailer.createTransport({
@@ -48,7 +16,20 @@ export const sendEmail = async (to, subject, html) => {
             from: process.env.EMAIL_USER,
             to,
             subject,
-            html,
+            html: htmlContent,
+            attachments: [
+                {
+                    filename: 'ticket.pdf',
+                    content: pdfBuffer,
+                    contentType: 'application/pdf',
+                },
+                {
+                    filename: 'qrcode.png',
+                    content: qrCodeBuffer,
+                    contentType: 'image/png',
+                    cid: 'qrCodeImage', // same cid value as in the html img src
+                },
+            ],
         };
 
         // Send email
