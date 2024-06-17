@@ -12,42 +12,21 @@ import { useAuth } from '@/context/AuthContext';
 //Accordion
 import { Accordion, AccordionItem, AccordionItemHeading, AccordionItemButton, AccordionItemPanel } from 'react-accessible-accordion';
 
-const TicketDetails = ({ event, tickets, convFee, platformFee, totalAmt }) => {
+const TicketDetails = ({ event, tickets, convFee, platformFee, totalAmt, form, setForm, ph, setPh }) => {
 
-    const { user, login } = useAuth();
-    const [ph, setPh] = useState("");
+    const { user } = useAuth();
+    // const [ph, setPh] = useState("");
 
-    const [form, setForm] = useState({
-        firstname: null,
-        lastname: null,
-        email: null,
-    });
+    // const [form, setForm] = useState({
+    //     firstname: null,
+    //     lastname: null,
+    //     email: null,
+    // });
 
-    //To verify user jwt token using cookies
-    const verifyUser = async () => {
-        try {
-            const res = await fetch('/api/auth/verify', {
-                method: 'GET',
-                headers: { 'Content-Type': 'application/json' },
-            });
-            if (res.ok) {
-                const data = await res.json();
-                login(data.user, true);
-                setLoading(false);
-            }
-        } catch (error) {
-            return
-        }
-    };
-
-    //If user exists
-    useEffect(() => {
-        verifyUser();
-    }, [])
 
     useEffect(() => {
         if (user.userData) {
-            console.log(user.userData);
+            // console.log(user.userData);
             setForm({
                 firstname: user.userData.firstname || null,
                 lastname: user.userData.lastname || null,
@@ -61,7 +40,6 @@ const TicketDetails = ({ event, tickets, convFee, platformFee, totalAmt }) => {
     const handleChange = (e) => {
         const { name, value } = e.target;
         setForm((prevForm) => ({ ...prevForm, [name]: value }));
-        console.log(form);
     };
 
     //To get formatted date
@@ -138,7 +116,7 @@ const TicketDetails = ({ event, tickets, convFee, platformFee, totalAmt }) => {
                         </div>
                     </div>
                 </div>
-                <h2 className='text-[#00FF38] font-semibold text-xl mt-20 mb-10'>Contact information</h2>
+                <h2 className='text-[#00FF38] font-semibold text-xl mt-20 mb-5'>Contact information</h2>
                 <div className='flex md:flex-row flex-col md:items-center gap-10'>
                     <form className="space-y-4 md:space-y-6 md:w-full">
                         <div className='flex flex-row gap-10'>
@@ -184,7 +162,7 @@ const TicketDetails = ({ event, tickets, convFee, platformFee, totalAmt }) => {
                             />
                             <span className='text-[0.7rem]'><span className='text-[#00FF38]'>Note</span> : You&apos;ll receive a copy of the tickets here</span>
                         </div>
-                        <div className=''>
+                        <div >
                             <label htmlFor="phone" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone :</label>
                             <PhoneInput country={"in"}
                                 value={ph || ''}
@@ -194,6 +172,8 @@ const TicketDetails = ({ event, tickets, convFee, platformFee, totalAmt }) => {
                                 dropdownStyle={{ "color": "white", "background": "black" }}
                                 autoFocus
                                 required
+                                disabled={user.isRegistered}
+                                className={`${user.isRegistered?"opacity-50":""}`}
                             />
                             <hr className="mt-1" />
                         </div>

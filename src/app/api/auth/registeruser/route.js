@@ -9,6 +9,8 @@ export const POST = async (req) => {
             return new Response(JSON.stringify({ success: false, error: 'Method Not Allowed' }), { status: 405 });
         }
 
+        // console.log(req.json())
+
         const { firstname, lastname, email, phoneNumber } = await req.json();
 
         // Validate the input

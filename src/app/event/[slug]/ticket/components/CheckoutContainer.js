@@ -4,8 +4,12 @@ import React, { useEffect, useState } from 'react'
 //Components
 
 
+//Toaster
+import { toast, Toaster } from "react-hot-toast";
 
-const CheckoutContainer = ({ totalAmt, handleCheckout, page, setPage, subtotal, tickets }) => {
+
+
+const CheckoutContainer = ({ totalAmt, handleCheckout, page, setPage, subtotal, tickets, form, ph }) => {
 
   const [anySelected, setAnySelected] = useState(false)
 
@@ -25,7 +29,12 @@ const CheckoutContainer = ({ totalAmt, handleCheckout, page, setPage, subtotal, 
       setPage("details")
     }
     else if(page === "details" && anySelected){
-      handleCheckout();
+      if(form.firstname===null || form.firstname==='' || form.lastname===null || form.lastname==='' || form.email===null || form.email==='' || ph===null || ph==='' || ph.length < 10){
+        toast.error("Enter all Contact Details to proceed to payment!")
+      }
+      else{
+        handleCheckout()
+      };
     }
   }
 
@@ -39,6 +48,7 @@ const CheckoutContainer = ({ totalAmt, handleCheckout, page, setPage, subtotal, 
         <div>
             <button className={`${!anySelected?"opacity-50":""} py-3 px-7 bg-[#00FF38] text-black font-medium rounded-full`} onClick={handleButton}>{(page==='ticket'?"Proceed":"Checkout")}</button>
         </div>
+        <Toaster toastOptions={{ duration: 4000 }} />
     </div>
   )
 }

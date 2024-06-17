@@ -1,11 +1,17 @@
 // src/models/User.js
 import mongoose from 'mongoose';
 
-const bookingSchema = new mongoose.Schema({
-  eventId: { type: mongoose.Schema.Types.ObjectId, ref: 'Event' },
+const ticketDetailSchema = new mongoose.Schema({
   ticketType: String,
   quantity: Number,
+  price: Number,
+}, { _id: false });
+
+const bookingSchema = new mongoose.Schema({
+  eventId: { type: mongoose.Schema.Types.ObjectId, ref: 'Event' },
+  ticketDetails: [ticketDetailSchema],
   bookingDate: Date,
+  orderId: { type: mongoose.Schema.Types.ObjectId, ref: 'Order' },
 }, { _id: false });
 
 const UserSchema = new mongoose.Schema({
