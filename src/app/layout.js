@@ -23,7 +23,7 @@ export default function RootLayout({ children }) {
             {children}
           </EventProvider>
         </AuthProvider>
-        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+        {/* <script src="https://checkout.razorpay.com/v1/checkout.js"></script> */}
       </body>
     </html>
   );

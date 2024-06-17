@@ -8,6 +8,8 @@ import { generateReceiptId } from "@/lib/uniqueReceipt"
 
 import React, { useState, useEffect } from 'react'
 
+import loadRazorpay from '@/lib/loadRazorpay';
+
 //Components
 import CheckoutContainer from './CheckoutContainer';
 import TicketSelection from './TicketSelection';
@@ -62,9 +64,16 @@ const Ticket = ({ event }) => {
     }
   };
 
+  const loadScript = () => {
+    loadRazorpay('https://checkout.razorpay.com/v1/checkout.js', () => {
+        console.log('Razorpay Checkout script loaded successfully.');
+    });
+};
+
   //If user exists
   useEffect(() => {
     verifyUser();
+    loadScript();
   }, [])
 
 
