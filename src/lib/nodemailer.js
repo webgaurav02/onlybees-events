@@ -1,6 +1,7 @@
 import nodemailer from 'nodemailer';
 
-export const sendEmail = async (to, subject, htmlContent, pdfBuffer, qrCodeBuffer, ticketId) => {
+// export const sendEmail = async (to, subject, htmlContent, pdfBuffer, qrCodeBuffer, ticketId) => {
+export const sendEmail = async (to, subject, htmlContent, qrCodeBuffer, ticketId) => {
     try {
         // Create a transporter
         const transporter = nodemailer.createTransport({
@@ -18,11 +19,11 @@ export const sendEmail = async (to, subject, htmlContent, pdfBuffer, qrCodeBuffe
             subject,
             html: htmlContent,
             attachments: [
-                {
-                    filename: `ticket_${ticketId}.pdf`,
-                    content: pdfBuffer,
-                    contentType: 'application/pdf',
-                },
+                // {
+                //     filename: `ticket_${ticketId}.pdf`,
+                //     content: pdfBuffer,
+                //     contentType: 'application/pdf',
+                // },
                 {
                     filename: 'qrcode.png',
                     content: qrCodeBuffer,

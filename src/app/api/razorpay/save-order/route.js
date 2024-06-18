@@ -6,8 +6,8 @@ import User from '@/models/User';
 import Event from '@/models/Event'
 import { sendEmail } from '@/lib/nodemailer'; // Adjust the import path
 import emailTemplate from '@/templates/emailTemplate.hbs'; // Import the precompiled template
-import pdfTemplate from '@/templates/pdfTemplate.hbs'; // Import the precompiled template
-import { generatePdfFromHtml } from '@/lib/generateTicketPDF';
+// import pdfTemplate from '@/templates/pdfTemplate.hbs'; // Import the precompiled template
+// import { generatePdfFromHtml } from '@/lib/generateTicketPDF';
 
 
 const generateQrCodeBuffer = async (text) => {
@@ -146,10 +146,11 @@ export const POST = async (req, res) => {
         const ticketId = ticket._id;
 
         // Generate PDF from HTML
-        const pdfBuffer = await generatePdfFromHtml(pdfHtml);
+        // const pdfBuffer = await generatePdfFromHtml(pdfHtml);
 
         // Send the email with PDF and QR code attachments
-        await sendEmail(user.email, `Booking Confirmation & Tickets - ${event.title}`, emailHtml, pdfBuffer, qrCodeBuffer, ticketId);
+        // await sendEmail(user.email, `Booking Confirmation & Tickets - ${event.title}`, emailHtml, pdfBuffer, qrCodeBuffer, ticketId);
+        await sendEmail(user.email, `Booking Confirmation & Tickets - ${event.title}`, emailHtml, qrCodeBuffer, ticketId);
 
         return new Response(JSON.stringify({ success: true }), { status: 201 });
 
