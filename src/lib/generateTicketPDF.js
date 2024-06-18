@@ -1,22 +1,60 @@
 import puppeteer from 'puppeteer';
 
 export const generatePdfFromHtml = async (htmlContent) => {
-    browser = await puppeteer.launch({
-        headless: true, // Run in headless mode
-        args: ['--no-sandbox', '--disable-setuid-sandbox'], // Required for some environments
-    });
-    const page = await browser.newPage();
-    
-    // Set content to the HTML string
-    await page.setContent(htmlContent, { waitUntil: 'load' });
-    
-    // Generate the PDF
-    const pdfBuffer = await page.pdf({
-        format: 'A3',
-        printBackground: true,
-    });
-    
-    await browser.close();
-    
-    return pdfBuffer;
+    let browser;
+
+    try {
+        browser = await puppeteer.launch();
+
+        const page = await browser.newPage();
+        await page.setContent(htmlContent, { waitUntil: 'load' });
+
+        const pdfBuffer = await page.pdf({
+            format: 'A3',
+            printBackground: true,
+        });
+
+        return pdfBuffer;
+    } catch (error) {
+        console.error('Error generating PDF:', error);
+        throw error;
+    } finally {
+        if (browser) {
+            await browser.close();
+        }
+    }
 };
+
+
+// ----------------------------- Using pdf make -----------------------------
+
+// import pdf from 'html-pdf';
+// import fs from 'fs';
+// import path from 'path';
+
+// // Function to generate PDF from HTML using html-pdf
+// export const generatePdfFromHtml = async (pdfHtml) => {
+//     return new Promise((resolve, reject) => {
+//         // Define options for pdf generation (adjust as needed)
+//         const options = {
+//             format: 'Letter', // Letter size pdf
+//             border: {
+//                 top: '0.5in',
+//                 right: '0.5in',
+//                 bottom: '0.5in',
+//                 left: '0.5in'
+//             }
+//         };
+
+//         // Generate PDF from html
+//         pdf.create(pdfHtml, options).toBuffer((err, buffer) => {
+//             if (err) {
+//                 console.error('Error generating PDF:', err);
+//                 reject(err);
+//             } else {
+//                 resolve(buffer);
+//             }
+//         });
+//     });
+// };
+

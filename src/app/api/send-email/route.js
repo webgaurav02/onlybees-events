@@ -2,7 +2,7 @@ import QRCode from 'qrcode';
 import connectMongo from '@/lib/mongodb';
 import User from '@/models/User';
 import { sendEmail } from '@/lib/nodemailer'; // Adjust the import path
-// import ticketTemplate from '@/templates/ticketTemplate.hbs'; // Import the precompiled template
+import ticketTemplate from '@/templates/emailTemplate.hbs'; // Import the precompiled template
 import pdfTemplate from '@/templates/pdfTemplate.hbs'; // Import the precompiled template
 import { generatePdfFromHtml } from '@/lib/generateTicketPDF';
 
