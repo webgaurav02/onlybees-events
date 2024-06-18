@@ -9,7 +9,7 @@ export const generatePdfFromHtml = async (htmlContent) => {
     
     // Generate the PDF
     const pdfBuffer = await page.pdf({
-        format: 'A4',
+        format: 'A3',
         printBackground: true,
     });
     

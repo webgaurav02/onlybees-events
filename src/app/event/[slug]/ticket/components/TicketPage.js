@@ -152,6 +152,8 @@ const Ticket = ({ event }) => {
       const res = await axios.post('/api/razorpay/save-order', {
         ticket,
         orderDetails,
+        convenienceFee: convFee,
+        platformFee,
         phone: ph,
       });
     } catch (error) {
@@ -252,16 +254,17 @@ const Ticket = ({ event }) => {
 
         handler: async function (response) {
           // alert(`Payment successful. Payment ID: ${response.razorpay_payment_id}`);
+          const paymentId = response.razorpay_payment_id;
           if (user.userData) {
-            saveOrder(ticket, orderDetails);
+            saveOrder(ticket, { ...orderDetails, paymentId });
           }
           else {
             userExists().then((exists) => {
               if (exists) {
-                saveOrder(ticket, orderDetails);
+                saveOrder(ticket, { ...orderDetails, paymentId });
               } else {
                 createNewUser().then((created) => {
-                  saveOrder(ticket, orderDetails);
+                  saveOrder(ticket, { ...orderDetails, paymentId });
                 })
               }
             });
