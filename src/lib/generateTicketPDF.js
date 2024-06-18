@@ -1,7 +1,10 @@
 import puppeteer from 'puppeteer';
 
 export const generatePdfFromHtml = async (htmlContent) => {
-    const browser = await puppeteer.launch({executablePath: '/path/to/Chrome'});
+    browser = await puppeteer.launch({
+        headless: true, // Run in headless mode
+        args: ['--no-sandbox', '--disable-setuid-sandbox'], // Required for some environments
+    });
     const page = await browser.newPage();
     
     // Set content to the HTML string
