@@ -57,7 +57,7 @@ const SignUpPage = () => {
         firstname: '',
         lastname: '',
         email: '',
-        phoneNumber: user.phone,
+        phoneNumber: user.userData,
     });
 
     useEffect(() => {
@@ -65,7 +65,7 @@ const SignUpPage = () => {
         if (user) {
             setForm(prevForm => ({
                 ...prevForm,
-                phoneNumber: user.phone
+                phoneNumber: user.userData
             }));
         }
     }, [user]);
@@ -92,7 +92,7 @@ const SignUpPage = () => {
             const data = await res.json();
             if (data.success) {
                 setLoading(false);
-                login(user.phone, true)
+                login(user.userData, true)
                 toast.success('User registered!');
             } else {
                 setLoading(false);
