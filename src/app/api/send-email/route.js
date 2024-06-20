@@ -7,16 +7,6 @@ import pdfTemplate from '@/templates/pdfTemplate.hbs'; // Import the precompiled
 import { generatePdfFromHtml } from '@/lib/generateTicketPDF';
 
 
-const generateQrCodeBuffer = async (text) => {
-    try {
-        const qrCodeBuffer = await QRCode.toBuffer(text);
-        return qrCodeBuffer;
-    } catch (err) {
-        console.error('Error generating QR code', err);
-        throw err;
-    }
-};
-
 const generateQrCodeUrl = async (text) => {
     try {
         const qrCodeUrl = await QRCode.toDataURL(text);
@@ -61,7 +51,6 @@ export const POST = async (req, res) => {
             // eventVenue: orderDetails.eventVenue,
             // eventDateTime: orderDetails.eventDateTime,
             bookingId: '1234214398189371289',
-            qrCodeCid: 'qrCodeImage', // reference to the CID of the attached image
         });
 
         // Render the ticket template

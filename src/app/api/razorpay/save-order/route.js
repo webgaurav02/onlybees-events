@@ -10,15 +10,6 @@ import pdfTemplate from '@/templates/pdfTemplate.hbs'; // Import the precompiled
 import { generatePdfFromHtml } from '@/lib/generateTicketPDF';
 
 
-const generateQrCodeBuffer = async (text) => {
-    try {
-        const qrCodeBuffer = await QRCode.toBuffer(text);
-        return qrCodeBuffer;
-    } catch (err) {
-        console.error('Error generating QR code', err);
-        throw err;
-    }
-};
 
 const generateQrCodeUrl = async (text) => {
     try {
@@ -52,13 +43,13 @@ export const POST = async (req, res) => {
     try {
         await connectMongo();
 
-        const { ticket, orderDetails, convenienceFee, platformFee, phone } = await req.json();
+        const { ticket, orderDetails, convenienceFee, platformFee, phone, email } = await req.json();
 
         const totalQuantity = ticket.ticketDetails.reduce((accumulator, current) => {
             return accumulator + current.quantity;
         }, 0);
 
-        const selectedTickets = ticket.ticketDetails.map(ticketItem => `${ticketItem.ticketType} x${ticketItem.quantity}`);
+        const selectedTickets = ticket.ticketDetails.map(ticketItem => `${ticketItem.ticketType} (x${ticketItem.quantity})`);
 
         const user = await User.findOne({ phone: phone });
         if (!user) {
@@ -96,9 +87,6 @@ export const POST = async (req, res) => {
         //Calculate amount
         const amount = orderDetails.amount - (convenienceFee + platformFee);
 
-        // Generate QR code for the email
-        const qrCodeBuffer = await generateQrCodeBuffer(newTicket._id.toString());
-
         // Generate QR code for the pdf ticket
         const qrCodeUrl = await generateQrCodeUrl(newTicket._id.toString());
 
@@ -119,7 +107,6 @@ export const POST = async (req, res) => {
             tickets: selectedTickets,
             transactionId: orderDetails.paymentId,
             bookingId: newOrder._id.toString(),
-            qrCodeCid: 'qrCodeImage', // reference to the CID of the attached image
         });
 
         // Render the ticket template
@@ -149,7 +136,7 @@ export const POST = async (req, res) => {
         const pdfBuffer = await generatePdfFromHtml(pdfHtml);
 
         // Send the email with PDF and QR code attachments
-        await sendEmail(user.email, `Booking Confirmation & Tickets - ${event.title}`, emailHtml, pdfBuffer, qrCodeBuffer, ticketId);
+        await sendEmail(email, `Booking Confirmation & Tickets - ${event.title}`, emailHtml, pdfBuffer, ticketId);
 
         return new Response(JSON.stringify({ success: true }), { status: 201 });
 

@@ -155,6 +155,7 @@ const Ticket = ({ event }) => {
         convenienceFee: convFee,
         platformFee,
         phone: ph,
+        email: form.email,
       });
     } catch (error) {
       console.log("Some error occured")
