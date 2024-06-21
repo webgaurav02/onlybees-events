@@ -8,7 +8,7 @@ export const PUT = async (req) => {
     await connectMongo();
 
     // Extract data from request body
-    const { id, title, about, venue, city, date, image, ticketPhases, organizer } = await req.json();
+    const { id, title, about, venue, city, date, time, image, ticketPhases, organizer } = await req.json();
 
     let imageUrl = image;
     let public_id;
@@ -34,6 +34,8 @@ export const PUT = async (req) => {
         ticketPrice[phase.phaseName] = {
             quantity: phase.quantity,
             price: phase.price,
+            info: phase.info,
+            coverCharge: phase.coverCharge,
         };
     });
 
@@ -44,6 +46,7 @@ export const PUT = async (req) => {
       venue,
       city,
       date,
+      time,
       imageUrl,
       public_id,
       ticketPrice,

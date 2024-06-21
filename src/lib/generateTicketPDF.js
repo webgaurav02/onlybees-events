@@ -4,7 +4,16 @@ export const generatePdfFromHtml = async (htmlContent) => {
     let browser;
 
     try {
-        browser = await puppeteer.launch();
+
+        if (process.env.NODE_ENV === 'development') {
+            browser = await puppeteer.launch();
+        }
+        else {
+            browser = await puppeteer.launch({
+                executablePath: '/usr/bin/chromium-browser',
+            });
+        }
+
 
         const page = await browser.newPage();
         await page.setContent(htmlContent, { waitUntil: 'load' });

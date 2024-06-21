@@ -92,10 +92,12 @@ const Ticket = ({ event }) => {
 
   useEffect(() => {
     if (event && event.ticketPrice) {
-      const transformedData = Object.entries(event.ticketPrice).map(([phaseName, { quantity, price }]) => ({
+      const transformedData = Object.entries(event.ticketPrice).map(([phaseName, { quantity, price, info, coverCharge }]) => ({
         phaseName,
         quantity,
         price,
+        info,
+        coverCharge,
         selected: 0,
         amount: 0,
       }));

@@ -11,6 +11,14 @@ const TicketPriceSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
+    coverCharge: {
+        type: Number,
+        required: false,
+    },
+    info: {
+        type: String,
+        required: false,
+    },
 }, { _id: false }); // Disable automatic _id generation for sub-documents
 
 
@@ -38,6 +46,10 @@ const EventSchema = new mongoose.Schema({
     },
     date: {
         type: Date,
+        required: true,
+    },
+    time: {
+        type: String,
         required: true,
     },
     imageUrl: {

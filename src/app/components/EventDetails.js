@@ -11,7 +11,8 @@ import "./EventDetails.css";
 // Components
 import Button from './Button';
 
-// import { useRouter } from 'next/navigation';
+//MUI Icons
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 
 const EventDetails = (props) => {
@@ -89,8 +90,8 @@ const EventDetails = (props) => {
 
                     <div className="p-0 leading-8">
                         <h2 className="lg:ml-0 ml-3 lg:text-right text-left text-5xl font-bold mb-2">{event.title}</h2>
-                        <p className="lg:ml-0 ml-3 lg:text-right text-left font-light">{event.venue}</p>
-                        {<h3 className="lg:ml-0 ml-3 lg:text-right text-left text-xl text-[#00FF38]">{formattedDate} <span className="font-light text-sm">{isMobile?<br />:""}GMT +5:30</span></h3>}
+                        <p className="lg:ml-0 ml-3 lg:text-right text-left font-light"><LocationOnIcon fontSize='small'/> {event.venue}</p>
+                        {<h3 className="lg:ml-0 ml-3 lg:text-right text-left text-xl text-[#00FF38]">{formattedDate}, {event.time}<span className="font-light text-sm">{isMobile?<br />:""}GMT +5:30</span></h3>}
                         <div className="lg:ml-0 ml-3 flex lg:gap-16 gap-10 lg:justify-end">
                             {/* <p>Tag</p> */}
                             <p>{event.city}</p>

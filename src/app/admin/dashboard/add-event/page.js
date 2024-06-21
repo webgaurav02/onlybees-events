@@ -21,13 +21,11 @@ export default function AddEvent() {
         venue: '',
         city: '',
         date: '',
+        time: '',
         image: '',
         // quantity: 0,
         ticketPhases: [],
     });
-    //To add phases
-    const [ticketPhase, setTicketPhase] = useState({ phaseName: '', quantity: 0, price: 0 });
-
 
     const [loading, setLoading] = useState(false);
 
@@ -59,7 +57,7 @@ export default function AddEvent() {
     const addTicketPhase = () => {
         setForm((prevForm) => ({
             ...prevForm,
-            ticketPhases: [...prevForm.ticketPhases, { phaseName: '', quantity: 0, price: 0 }]
+            ticketPhases: [...prevForm.ticketPhases, { phaseName: '', quantity: 0, info: '', coverCharge: 0, price: 0 }]
         }));
     };
 
@@ -112,7 +110,7 @@ export default function AddEvent() {
                     <div className='flex flex-col w-full'>
                         <label className="mb-1 font-bold" htmlFor="organizer">Event Organizer</label>
                         <input
-                            className="mb-4 p-2 border bg-[#1b1b1b] border-gray-800 rounded"
+                            className="mb-4 p-2 border bg-[#1b1b1b] border-black rounded"
                             type="text"
                             name="organizer"
                             value={form.organizer}
@@ -123,7 +121,7 @@ export default function AddEvent() {
 
                         <label className="mb-1 font-bold" htmlFor="title">Event Title</label>
                         <input
-                            className="mb-4 p-2 border bg-[#1b1b1b] border-gray-800 rounded"
+                            className="mb-4 p-2 border bg-[#1b1b1b] border-black rounded"
                             type="text"
                             name="title"
                             value={form.title}
@@ -134,7 +132,7 @@ export default function AddEvent() {
 
                         <label className="mb-1 font-bold" htmlFor="about">About</label>
                         <textarea
-                            className="mb-4 p-2 border bg-[#1b1b1b] border-gray-800 rounded"
+                            className="mb-4 p-2 border bg-[#1b1b1b] border-black rounded"
                             name="about"
                             value={form.about}
                             onChange={handleChange}
@@ -145,7 +143,7 @@ export default function AddEvent() {
 
                         <label className="mb-1 font-bold" htmlFor="venue">Venue</label>
                         <input
-                            className="mb-4 p-2 border bg-[#1b1b1b] border-gray-800 rounded"
+                            className="mb-4 p-2 border bg-[#1b1b1b] border-black rounded"
                             type="text"
                             name="venue"
                             value={form.venue}
@@ -156,7 +154,7 @@ export default function AddEvent() {
 
                         <label className="mb-1 font-bold" htmlFor="city">City</label>
                         <input
-                            className="mb-4 p-2 border bg-[#1b1b1b] border-gray-800 rounded"
+                            className="mb-4 p-2 border bg-[#1b1b1b] border-black rounded"
                             type="text"
                             name="city"
                             value={form.city}
@@ -167,7 +165,7 @@ export default function AddEvent() {
 
                         <label className="mb-1 font-bold" htmlFor="date">Date</label>
                         <input
-                            className="mb-4 p-2 border bg-[#1b1b1b] border-gray-800 rounded"
+                            className="mb-4 p-2 border bg-[#1b1b1b] border-black rounded"
                             type="date"
                             name="date"
                             value={form.date}
@@ -175,16 +173,15 @@ export default function AddEvent() {
                             required
                         />
 
-                        {/* <label className="mb-1 font-bold" htmlFor="quantity">Ticket Quantity</label>
+                        <label className="mb-1 font-bold" htmlFor="date">Time (Eg: 9 PM)</label>
                         <input
-                            className="mb-4 p-2 border bg-[#1b1b1b] border-gray-800 rounded"
-                            type="number"
-                            name="quantity"
-                            value={form.quantity}
+                            className="mb-4 p-2 border bg-[#1b1b1b] border-black rounded"
+                            type="text"
+                            name="time"
+                            value={form.time}
                             onChange={handleChange}
-                            placeholder="Quantity"
                             required
-                        /> */}
+                        />
 
                     </div>
                     <div className='flex flex-col w-4/3'>
@@ -212,48 +209,75 @@ export default function AddEvent() {
                 </div>
                 <label className="mb-1 font-bold" htmlFor="ticketPhases">Tickets</label>
                 {form.ticketPhases.map((ticketPhase, index) => (
-                    <div key={index} className="mb-1 p-2 border bg-[#1b1b1b] border-gray-800 rounded flex flex-col lg:flex-row gap-3 w-fit">
+                    <div key={index} className="mb-1 p-5 md:px-10 px-1 border bg-[#111111] border-black rounded w-full">
+                        <div className='flex flex-col lg:flex-row gap-3'>
+                            <div className='flex flex-col w-full'>
+                                <label htmlFor="phaseName" className='ml-1 mb-1 text-sm'>Sale Phase</label>
+                                <input
+                                    className="mb-2 p-2 border bg-[#1b1b1b] border-black rounded"
+                                    type="text"
+                                    name="phaseName"
+                                    value={ticketPhase.phaseName}
+                                    onChange={(e) => handleTicketPhaseChange(index, e)}
+                                    placeholder="Sale Phase Name"
+                                    required
+                                />
+                            </div>
+                            <div className='flex flex-col w-full'>
+                                <label htmlFor="quantity" className='ml-1 mb-1 text-sm'>Quantity</label>
+                                <input
+                                    className="mb-2 p-2 border bg-[#1b1b1b] border-black rounded"
+                                    type="number"
+                                    name="quantity"
+                                    value={ticketPhase.quantity}
+                                    min="0"
+                                    onChange={(e) => handleTicketPhaseChange(index, e)}
+                                    placeholder="Quantity"
+                                    required
+                                />
+                            </div>
+                            <div className='flex flex-col w-full'>
+                                <label htmlFor="price" className='ml-1 mb-1 text-sm'>Price</label>
+                                <input
+                                    className="mb-2 p-2 border bg-[#1b1b1b] border-black rounded"
+                                    type="number"
+                                    name="price"
+                                    value={ticketPhase.price}
+                                    min="0"
+                                    onChange={(e) => handleTicketPhaseChange(index, e)}
+                                    placeholder="Price"
+                                    required
+                                />
+                            </div>
+                            <div className='flex flex-col w-full'>
+                                <label htmlFor="coverCharge" className='ml-1 mb-1 text-sm'>Cover Charge</label>
+                                <input
+                                    className="mb-2 p-2 border bg-[#1b1b1b] border-black rounded"
+                                    type="number"
+                                    name="coverCharge"
+                                    value={ticketPhase.coverCharge}
+                                    min="0"
+                                    onChange={(e) => handleTicketPhaseChange(index, e)}
+                                    placeholder="Cover Charge"
+                                />
+                            </div>
+                        </div>    
                         <div className='flex flex-col'>
-                            <label htmlFor="phaseName" className='ml-1 mb-1 text-sm'>Sale Phase</label>
-                            <input
-                                className="mb-2 p-2 border bg-[#1b1b1b] border-gray-800 rounded"
+                            <label htmlFor="info" className='ml-1 mb-1 text-sm'>Info</label>
+                            <textarea
+                                className="mb-2 p-2 border bg-[#1b1b1b] border-black rounded"
                                 type="text"
-                                name="phaseName"
-                                value={ticketPhase.phaseName}
+                                name="info"
+                                value={ticketPhase.info}
                                 onChange={(e) => handleTicketPhaseChange(index, e)}
-                                placeholder="Sale Phase Name"
-                                required
-                            />
-                        </div>
-                        <div className='flex flex-col'>
-                            <label htmlFor="quantity" className='ml-1 mb-1 text-sm'>Quantity</label>
-                            <input
-                                className="mb-2 p-2 border bg-[#1b1b1b] border-gray-800 rounded"
-                                type="number"
-                                name="quantity"
-                                value={ticketPhase.quantity}
-                                onChange={(e) => handleTicketPhaseChange(index, e)}
-                                placeholder="Quantity"
-                                required
-                            />
-                        </div>
-                        <div className='flex flex-col'>
-                            <label htmlFor="price" className='ml-1 mb-1 text-sm'>Price</label>
-                            <input
-                                className="mb-2 p-2 border bg-[#1b1b1b] border-gray-800 rounded"
-                                type="number"
-                                name="price"
-                                value={ticketPhase.price}
-                                onChange={(e) => handleTicketPhaseChange(index, e)}
-                                placeholder="Price"
-                                required
+                                placeholder="Ticket Info"
                             />
                         </div>
                         <button type="button" onClick={() => removeTicketPhase(index)} className="text-red-500">Remove</button>
                     </div>
                 ))}
                 <button type="button" onClick={addTicketPhase} className="w-44 px-2 bg-slate-800 hover:bg-white hover:text-black text-white font-medium rounded">Add Ticket Phase</button>
-                <div>
+                <div className=''>
                     <button
                         className="mt-20 p-2 px-12 bg-[#00FF38] text-black font-medium rounded cursor-pointer"
                         type="submit"

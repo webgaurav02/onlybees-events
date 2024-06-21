@@ -66,22 +66,26 @@ const TicketSelection = ({ event, tickets, handleIncrement, handleDecrement }) =
                                         </div>
                                     </AccordionItemButton>
                                 </AccordionItemHeading>
-                                { ticket.quantity!==0 && <AccordionItemPanel className="p-4 mx-4 border bg-[#121212] border-white border-opacity-20 rounded-[15px]">
-                                    <div className="flex justify-center items-center">
-                                        <div className="flex gap-5 items-center">
-                                            <button
-                                                onClick={() => handleDecrement(ticket.phaseName)}
-                                                className=""
-                                            >
-                                                <span className='text-[2rem] font-light h-fit'>-</span>
-                                            </button>
-                                            <span className="mx-2 text-3xl">{ticket.selected}</span>
-                                            <button
-                                                onClick={() => handleIncrement(ticket.phaseName)}
-                                                className=""
-                                            >
-                                                <span className='text-[2rem] font-light h-fit'>+</span>
-                                            </button>
+                                { ticket.quantity!==0 && <AccordionItemPanel className="">
+                                        <p className="ml-5 mb-5 text-[0.8rem] text-center font-normal">{` ${(ticket.coverCharge && ticket.coverCharge !== 0) ? `Cover : ${ticket.coverCharge}` : "No Cover"} ${(ticket.info!==null && ticket.info!=='')? ` | ${ticket.info}` : ""}`}</p>
+                                        {/* { && <p className="ml-5 mb-10 text-[1rem] font-normal">{ticket.info}</p>} */}
+                                    <div className='p-4 mx-4 border bg-[#121212] border-white border-opacity-20 rounded-[15px]'>
+                                        <div className="flex justify-center items-center">
+                                            <div className="flex gap-5 items-center">
+                                                <button
+                                                    onClick={() => handleDecrement(ticket.phaseName)}
+                                                    className=""
+                                                >
+                                                    <span className='text-[2rem] font-light h-fit'>-</span>
+                                                </button>
+                                                <span className="mx-2 text-3xl">{ticket.selected}</span>
+                                                <button
+                                                    onClick={() => handleIncrement(ticket.phaseName)}
+                                                    className=""
+                                                >
+                                                    <span className='text-[2rem] font-light h-fit'>+</span>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </AccordionItemPanel>}

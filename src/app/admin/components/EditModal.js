@@ -17,13 +17,11 @@ const EditModal = ({ event, onClose, onSave }) => {
         venue: '',
         city: '',
         date: '',
+        time: '',
         image: '',
         slug: '',
         ticketPhases: [],
-        // quantity: 0,
-        // ticketPrice: 0,
     });
-    const [ticketPhase, setTicketPhase] = useState({ phaseName: '', quantity: 0, price: 0 });
 
     let date = new Date(event.date);
     let formattedDate = date.toISOString().substring(0, 10);
@@ -31,9 +29,11 @@ const EditModal = ({ event, onClose, onSave }) => {
     useEffect(() => {
 
         // Transform the ticketPrice object into an array of phases
-        const ticketPhasesArray = Object.entries(event.ticketPrice).map(([phaseName, { quantity, price }]) => ({
+        const ticketPhasesArray = Object.entries(event.ticketPrice).map(([phaseName, { quantity, price, info, coverCharge }]) => ({
             phaseName,
             quantity,
+            info,
+            coverCharge,
             price,
         }));
 
@@ -45,14 +45,11 @@ const EditModal = ({ event, onClose, onSave }) => {
             venue: event.venue,
             city: event.city,
             date: event.date,
+            time: event.time,
             image: event.imageUrl,
             slug: event.slug,
             ticketPhases: ticketPhasesArray,
-            // quantity: event.quantity,
-            // ticketPrice: event.ticketPrice,
         });
-        // console.log(event);
-        // console.log(form);
     }, [event]);
 
     const handleChange = (e) => {
@@ -84,7 +81,7 @@ const EditModal = ({ event, onClose, onSave }) => {
     const addTicketPhase = () => {
         setForm((prevForm) => ({
             ...prevForm,
-            ticketPhases: [...prevForm.ticketPhases, { phaseName: '', quantity: 0, price: 0 }]
+            ticketPhases: [...prevForm.ticketPhases, { phaseName: '', quantity: 0, info: '', coverCharge: 0, price: 0 }]
         }));
     };
 
@@ -178,8 +175,16 @@ const EditModal = ({ event, onClose, onSave }) => {
                             onChange={handleChange}
                         />
 
-
-
+                        <label className="mb-1 font-bold" htmlFor="date">Time (Eg: 9 PM)</label>
+                        <input
+                            className="mb-4 p-2 border bg-[#1b1b1b] border-black rounded"
+                            type="text"
+                            name="event-time"
+                            value={form.time}
+                            onChange={handleChange}
+                            required
+                        />
+                        
                     </div>
                     <div className='flex flex-col w-4/3'>
                         <label className="mb-1 mt-10 lg:mt-0 font-bold" htmlFor="image">Change Event Flyer<span className='text-[0.7rem] text-[#00FF38] font-normal'> (Do not Re-upload if same)</span></label>
@@ -203,47 +208,74 @@ const EditModal = ({ event, onClose, onSave }) => {
                     </div>
                 </div>
                 <label className="mb-1 font-bold" htmlFor="ticketPhases">Tickets</label>
-                {form.ticketPhases.map((ticketPhase, index) => (
-                    <div key={index} className="mb-1 p-2 border bg-[#1b1b1b] border-gray-800 rounded flex flex-col lg:flex-row gap-3 w-fit">
-                        <div className=' flex flex-col'>
-                            <label htmlFor="phaseName" className='ml-1 mb-1 text-sm'>Sale Phase</label>
-                            <input
-                                className="mb-2 p-2 border bg-[#1b1b1b] border-gray-800 rounded"
-                                type="text"
-                                name="phaseName"
-                                value={ticketPhase.phaseName}
-                                onChange={(e) => handleTicketPhaseChange(index, e)}
-                                placeholder="Sale Phase Name"
-                                required
-                            />
+                {
+                    form.ticketPhases.map((ticketPhase, index) => (
+                        <div key={index} className=" text-center mb-1 p-5 md:px-10 px-2 border bg-[#1b1b1b] border-gray-800 rounded w-full">
+                            <div className='flex flex-col lg:flex-row gap-3 text-left'>
+                                <div className=' flex flex-col'>
+                                    <label htmlFor="phaseName" className='ml-1 mb-1 text-sm'>Sale Phase</label>
+                                    <input
+                                        className="mb-2 p-2 border bg-[#1b1b1b] border-gray-800 rounded "
+                                        type="text"
+                                        name="phaseName"
+                                        value={ticketPhase.phaseName}
+                                        onChange={(e) => handleTicketPhaseChange(index, e)}
+                                        placeholder="Sale Phase Name"
+                                        required
+                                    />
+                                </div>
+                                <div className='flex flex-col w-full'>
+                                    <label htmlFor="quantity" className='ml-1 mb-1 text-sm'>Quantity</label>
+                                    <input
+                                        className="mb-2 p-2 border bg-[#1b1b1b] border-gray-800 rounded"
+                                        type="number"
+                                        name="quantity"
+                                        value={ticketPhase.quantity}
+                                        onChange={(e) => handleTicketPhaseChange(index, e)}
+                                        placeholder="Quantity"
+                                        required
+                                    />
+                                </div>
+                                <div className='flex flex-col w-full'>
+                                    <label htmlFor="price" className='ml-1 mb-1 text-sm'>Price</label>
+                                    <input
+                                        className="mb-2 p-2 border bg-[#1b1b1b] border-gray-800 rounded"
+                                        type="number"
+                                        name="price"
+                                        value={ticketPhase.price}
+                                        onChange={(e) => handleTicketPhaseChange(index, e)}
+                                        placeholder="Price"
+                                        required
+                                    />
+                                </div>
+                                <div className='flex flex-col w-full'>
+                                    <label htmlFor="coverCharge" className='ml-1 mb-1 text-sm'>Cover Charge</label>
+                                    <input
+                                        className="mb-2 p-2 border bg-[#1b1b1b] border-gray-800 rounded"
+                                        type="number"
+                                        name="coverCharge"
+                                        value={ticketPhase.coverCharge}
+                                        min="0"
+                                        onChange={(e) => handleTicketPhaseChange(index, e)}
+                                        placeholder="Cover Charge"
+                                    />
+                                </div>
+                            </div>
+                            <div className='flex flex-col text-left'>
+                                <label htmlFor="info" className='ml-1 mb-1 text-sm'>Info</label>
+                                <textarea
+                                    className="mb-2 p-2 border bg-[#1b1b1b] border-gray-800 rounded"
+                                    type="text"
+                                    name="info"
+                                    value={ticketPhase.info}
+                                    onChange={(e) => handleTicketPhaseChange(index, e)}
+                                    placeholder="Ticket Info"
+                                />
+                            </div>
+                            <button type="button" onClick={() => removeTicketPhase(index)} className="text-red-500">Remove</button>
                         </div>
-                        <div className='flex flex-col'>
-                            <label htmlFor="quantity" className='ml-1 mb-1 text-sm'>Quantity</label>
-                            <input
-                                className="mb-2 p-2 border bg-[#1b1b1b] border-gray-800 rounded"
-                                type="number"
-                                name="quantity"
-                                value={ticketPhase.quantity}
-                                onChange={(e) => handleTicketPhaseChange(index, e)}
-                                placeholder="Quantity"
-                                required
-                            />
-                        </div>
-                        <div className='flex flex-col'>
-                            <label htmlFor="price" className='ml-1 mb-1 text-sm'>Price</label>
-                            <input
-                                className="mb-2 p-2 border bg-[#1b1b1b] border-gray-800 rounded"
-                                type="number"
-                                name="price"
-                                value={ticketPhase.price}
-                                onChange={(e) => handleTicketPhaseChange(index, e)}
-                                placeholder="Price"
-                                required
-                            />
-                        </div>
-                        <button type="button" onClick={() => removeTicketPhase(index)} className="text-red-500">Remove</button>
-                    </div>
-                ))}
+                    ))
+                }
                 <button type="button" onClick={addTicketPhase} className="w-44 px-2 bg-slate-800 hover:bg-white hover:text-black text-white font-medium rounded">Add Ticket Phase</button>
                 <div className="flex justify-start gap-4 mt-4">
                     <button
@@ -260,8 +292,8 @@ const EditModal = ({ event, onClose, onSave }) => {
                         Confirm
                     </button>
                 </div>
-            </form>
-        </div>
+            </form >
+        </div >
     );
 };
 

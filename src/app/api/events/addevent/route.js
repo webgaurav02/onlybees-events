@@ -25,8 +25,8 @@ export const POST = async (req) => {
         await connectMongo();
 
         // Extract data from request body
-        const { organizer, title, about, venue, city, date, image, ticketPhases } = await req.json();
-
+        const { organizer, title, about, venue, city, date, time, image, ticketPhases } = await req.json();
+ 
         // Generate a unique slug from the event title
         const slug = await generateUniqueSlug(title);
 
@@ -39,6 +39,8 @@ export const POST = async (req) => {
         const ticketPrice = {};
         ticketPhases.forEach(phase => {
             ticketPrice[phase.phaseName] = {
+                info: phase.info,
+                coverCharge: phase.coverCharge,
                 quantity: phase.quantity,
                 price: phase.price,
             };
@@ -52,11 +54,13 @@ export const POST = async (req) => {
             venue,
             city,
             date,
+            time,
             imageUrl: uploadResponse.secure_url,
             public_id: uploadResponse.public_id,
             ticketPrice,
             slug,
         });
+
 
         // Save the event to MongoDB
         await event.save();
