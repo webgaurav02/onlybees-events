@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 const Card = (props) => {
     return (
-        <Link href={`/admin/dashboard/${props.title.toLowerCase()}-event`} className='cursor-pointer w-full'>
+        <Link href={`/admin/dashboard/${props.link}`} className='cursor-pointer w-full'>
             <div className='md:text-center border hover:border-[#00FF38] border-1 hover:bg-[#00FF38] hover:text-black px-5 py-5'>
                 <h1 className='text-2xl'>{`${props.title} event`}</h1>
             </div>
@@ -49,9 +49,9 @@ const Events = () => {
     return (
         <div className="md:px-16 py-5 text-center">
             <div className='px-5 pt-5 flex flex-col md:flex-row justify-between md:gap-10 gap-5'>
-                <Card title="Add" />
-                <Card title="Edit" />
-                <Card title="Delete" />
+                <Card title="Add" link="add-event"/>
+                <Card title="Edit" link="edit-event"/>
+                <Card title="Delete" link="delete-event"/>
             </div>
             <h2 className='mt-20 text-xl'>All events</h2>
             <div className="events grid w-full mt-5 px-10" style={{ scrollbarWidth: 'none' }}>

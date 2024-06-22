@@ -22,6 +22,8 @@
     "express-validator": "^7.1.0",
     "firebase": "^10.12.2",
     "fs": "^0.0.1-security",
+    "handlebars": "^4.7.8",
+    "handlebars-loader": "^1.7.3",
     "html-pdf": "^3.0.1",
     "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.2",
@@ -33,6 +35,7 @@
     "otp-input-react": "^0.3.0",
     "path": "^0.12.7",
     "pdf-lib": "^1.17.1",
+    "postcss": "^8",
     "puppeteer": "^22.11.2",
     "qrcode": "^1.5.3",
     "raw-loader": "^4.0.2",
@@ -43,13 +46,11 @@
     "react-hot-toast": "^2.4.1",
     "react-icons": "^5.2.1",
     "react-phone-input-2": "^2.15.1",
+    "react-qr-scanner": "^1.0.0-alpha.11",
     "react-spinners": "^0.13.8",
     "react-toastify": "^10.0.5",
-    "uuid": "^10.0.0",
-    "handlebars": "^4.7.8",
-    "handlebars-loader": "^1.7.3",
-    "postcss": "^8",
-    "tailwindcss": "^3.4.4"
+    "tailwindcss": "^3.4.4",
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
     "eslint": "^8",
