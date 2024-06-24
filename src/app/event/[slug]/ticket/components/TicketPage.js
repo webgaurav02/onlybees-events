@@ -15,6 +15,8 @@ import CheckoutContainer from './CheckoutContainer';
 import TicketSelection from './TicketSelection';
 import TicketDetails from './TicketDetails';
 import Header from './Header';
+import Success from './Success';
+import Failed from './Failed';
 
 
 import { toast, Toaster } from "react-hot-toast";
@@ -44,6 +46,8 @@ const Ticket = ({ event }) => {
     lastname: null,
     email: null,
   });
+  const [ticketDet, setTicketDet] = useState(null);
+  const [orderDet, setOrderDet] = useState(null);
 
   const router = useRouter();
 
@@ -66,9 +70,9 @@ const Ticket = ({ event }) => {
 
   const loadScript = () => {
     loadRazorpay('https://checkout.razorpay.com/v1/checkout.js', () => {
-        console.log('Razorpay Checkout script loaded successfully.');
+      console.log('Razorpay Checkout script loaded successfully.');
     });
-};
+  };
 
   //If user exists
   useEffect(() => {
@@ -236,6 +240,9 @@ const Ticket = ({ event }) => {
       });
 
       const { order, ticket, orderDetails } = response.data;
+      setTicketDet(ticket)
+      setOrderDet(orderDetails)
+
 
       const keyId = process.env.RAZORPAY_KEY_ID;
       const keySecret = process.env.RAZORPAY_KEY_SECRET;
@@ -272,7 +279,8 @@ const Ticket = ({ event }) => {
               }
             });
           }
-          router.push("/dashboard/my-tickets")
+          setPage("success")
+          // router.push("/dashboard/my-tickets")
         },
 
         prefill: {
@@ -296,18 +304,19 @@ const Ticket = ({ event }) => {
     } catch (error) {
       console.error('Error initiating payment:', error);
       // Handle error, e.g., show error message to user
+      setPage("failed")
     }
   };
 
   return (
     <>
       <Toaster toastOptions={{ duration: 4000 }} />
-      <Header
+      { page !== "success" && page !== "failed" && <Header
         mode="dark"
         page={page}
         setPage={setPage}
         event={event}
-      />
+      />}
       {page === "ticket" && (
         <TicketSelection
           event={event}
@@ -330,16 +339,27 @@ const Ticket = ({ event }) => {
           setPh={setPh}
         />
       )}
-      <CheckoutContainer
+      {page === "success" && <Success
+          event={event}
+          ticket={ticketDet}
+          form={form}
+          ph={ph}
+      />}
+      {page === "failed" && <Failed
+          event={event}
+          orderDetails={orderDet}
+
+      />}
+      {page !== "success" && page !== "failed" && <CheckoutContainer
         totalAmt={totalAmt}
         handleCheckout={handleCheckout}
         page={page}
         setPage={setPage}
-        subtotal={subtotal}
         tickets={tickets}
+        subtotal={subtotal}
         form={form}
         ph={ph}
-      />
+      />}
     </>
   );
 };
