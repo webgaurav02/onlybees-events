@@ -16,7 +16,11 @@ export const POST = async (req) => {
         await connectMongo();
 
         // Find the ticket by ID and update its isUsed status to true
-        const ticket = await Ticket.findByIdAndUpdate(ticketId, { isUsed: true }, { new: true });
+        const ticket = await Ticket.findById(ticketId);
+        if(ticket.isUsed){
+            return new Response(JSON.stringify({ success: false, error: 'Ticket already used!' }), { status: 410 });
+        }
+        // const ticket = await Ticket.findByIdAndUpdate(ticketId, { isUsed: true }, { new: true });
 
         // Check if the ticket was found and updated
         if (!ticket) {
