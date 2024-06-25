@@ -18,7 +18,7 @@ const UserSchema = new mongoose.Schema({
   phone: { type: String, required: true, unique: true },
   firstname: { type: String, required: true },
   lastname: { type: String },
-  email: { type: String, unique: true },
+  email: { type: String },
   bookings: [bookingSchema], // Array of booking subdocuments
   createdAt: { type: Date, default: Date.now },
 });
