@@ -101,6 +101,11 @@ const Navbar = (props) => {
 
     //To verify user jwt token using cookies
     const verifyUser = async () => {
+
+        if (sessionStorage.getItem('isChecked')) {
+            return;
+          }
+
         try {
             const res = await fetch('/api/auth/verify', {
                 method: 'GET',
@@ -111,6 +116,7 @@ const Navbar = (props) => {
                 login(data.user, true);
                 setLoading(false);
             }
+            sessionStorage.setItem('isChecked', 'true');
         } catch (error) {
             return
         }
@@ -146,6 +152,7 @@ const Navbar = (props) => {
             });
             if (res.ok) {
                 logout();
+                sessionStorage.removeItem('isChecked');
                 toast.success("Logged out user!")
             }
         } catch (error) {

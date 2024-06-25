@@ -23,6 +23,10 @@ import Image from "next/image";
 
 const LoginPage = () => {
 
+    useEffect( ()=> {
+        sessionStorage.setItem('isChecked', 'false');
+    }, [])
+
     const router = useRouter();
 
     const { user, login } = useAuth();
