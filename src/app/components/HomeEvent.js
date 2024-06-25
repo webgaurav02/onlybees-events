@@ -27,7 +27,7 @@ const HomeEvent = (props) => {
             href={`/event/${props.eventItem.slug}`}
             passHref
         >
-            <div className=' w-56 h-auto px-0'>
+            <div className='w-56 md:w-72 h-auto px-0'>
                 <Image
                     src={(props.eventItem.imageUrl !== null) ? props.eventItem.imageUrl : ""}
                     loading="lazy"
@@ -38,10 +38,10 @@ const HomeEvent = (props) => {
                     alt="Event Flyer"
                     style={{ "boxShadow": "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px", "borderRadius": "8px" }}
                 />
-                <div className=' pl-3 text-left mt-3 font-medium text-[#121212] text-sm lg:text-sm lg:leading-snug'>{formattedDate}</div>
-                <div className=' pl-3 text-left  font-semibold font-blogger text-xl lg:text-xl lg:leading-snug'>{props.eventItem.title}</div>
-                <div className=' pl-3 text-left font-medium text-[#3a3a3a] text-sm lg:text-sm lg:leading-snug '>{props.eventItem.venue}</div>
-                <div className=' pl-3 text-left font-semibold text-[#3a3a3a] text-base lg:text-sm lg:leading-snug mt-1'>{getStartingPrice()}</div>
+                <div className=' text-left mt-3 font-semibold text-[#54D454] text-sm lg:text-sm lg:leading-snug'>{formattedDate}</div>
+                <div className=' text-left  font-semibold font-blogger text-xl lg:text-xl lg:leading-snug'>{props.eventItem.title}</div>
+                <div className=' text-left font-light text-[#3a3a3a] text-sm lg:text-sm lg:leading-snug '>{props.eventItem.venue}</div>
+                <div className=' text-left font-normal text-[#3a3a3a] text-base lg:text-sm lg:leading-snug mt-1'>{getStartingPrice()}</div>
             </div>
         </Link>
     )
