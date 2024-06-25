@@ -189,11 +189,11 @@ const Navbar = (props) => {
                     <div className="flex justify-end w-full md:hidden p-4">
                         <FaTimes className="text-2xl cursor-pointer" onClick={toggleMenu} />
                     </div>
-                    <Link href="/events" className={`md:text-sm block md:px-4 py-3 ml-10 md:ml-0 md:py-0 ${pathname === '/events' ? 'underline underline-offset-8' : ''}`}>Browse events</Link>
-                    <Link href="/about" className={`md:text-sm block md:px-4 py-3 ml-10 md:ml-0 md:py-0 ${pathname === '/about' ? 'underline underline-offset-8' : ''}`}>About</Link>
-                    <Link href="/shop" className={`md:text-sm block md:px-4 py-3 ml-10 md:ml-0 md:py-0 ${pathname === '/shop' ? 'underline underline-offset-8' : ''}`}>Shop</Link>
-                    <Link href="/artist" className={`md:text-sm block md:px-4 py-3 ml-10 md:ml-0 md:py-0 ${pathname === '/artist' ? 'underline underline-offset-8' : ''}`}>Artist</Link>
-                    <Link href="/blog" className={`md:text-sm block md:px-4 lg:pr-5 py-3 ml-10 md:ml-0 md:py-0 ${pathname === '/blog' ? 'underline underline-offset-8' : ''}`}>Blog</Link>
+                    <Link href="/events" className={`md:text-sm block md:px-4 py-3 ml-10 md:ml-0 md:py-0 hover:font-medium ${pathname === '/events' ? 'underline underline-offset-8' : ''}`}>Browse events</Link>
+                    <Link href="/about" className={`md:text-sm block md:px-4 py-3 ml-10 md:ml-0 md:py-0 hover:font-medium ${pathname === '/about' ? 'underline underline-offset-8' : ''}`}>About</Link>
+                    <Link href="/shop" className={`md:text-sm block md:px-4 py-3 ml-10 md:ml-0 md:py-0 hover:font-medium ${pathname === '/shop' ? 'underline underline-offset-8' : ''}`}>Shop</Link>
+                    <Link href="/artist" className={`md:text-sm block md:px-4 py-3 ml-10 md:ml-0 md:py-0 hover:font-medium ${pathname === '/artist' ? 'underline underline-offset-8' : ''}`}>Artist</Link>
+                    <Link href="/blog" className={`md:text-sm block md:px-4 lg:pr-5 py-3 ml-10 md:ml-0 md:py-0 hover:font-medium ${pathname === '/blog' ? 'underline underline-offset-8' : ''}`}>Blog</Link>
                     {user.userData && <DropdownMenu mode={props.mode} handleSetLogoutModal={handleSetLogoutModal} />}
                     <div className="text-center mt-20 lg:mt-0">
                         {!user.userData && <Link href="/login" className={`md:text-xs ${props.mode == "dark" ? "bg-white text-black" : "bg-black text-white"} lg:px-8 px-12 py-2 rounded-full`} >Login</Link>}
