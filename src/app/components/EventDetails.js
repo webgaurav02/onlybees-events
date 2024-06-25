@@ -5,37 +5,52 @@ import Image from "next/image";
 // Styles
 import "./EventDetails.css";
 
-//Images
-// import flyer from "../../../public/mm11.png"
+//Context
+import { useEvent } from "@/context/EventContext";
 
 // Components
 import Button from './Button';
+import EventNotFound from './EventNotFound';
 
 //MUI Icons
 import LocationOnIcon from '@mui/icons-material/LocationOn';
+import Loading from './Loading';
 
 
 const EventDetails = (props) => {
 
-    const { event } = props;
+    const { eventData, error, isLoading, fetchEventData } = useEvent();
+    const [formattedDate, setFormattedDate] = useState(null)
+
+    useEffect(() => {
+        fetchEventData(props.slug);
+    }, [props.slug, fetchEventData]);
+
+    useEffect(() => {
+        if (eventData) {
+            // To get formatted date
+            const options = {
+                weekday: 'short', // Fri
+                year: 'numeric',
+                month: 'short', // May
+                day: '2-digit', // 31
+            };
+            const date2 = new Date(eventData.date);
+            setFormattedDate(date2.toLocaleString('en-US', options));
+        }
+    }, [eventData]);
+
+    // const { event } = props;
 
     const [windowWidth, setWindowWidth] = useState(null);
     const [isMobile, setIsMobile] = useState(false);
-    
-    //To get formatted date
-    const options = {
-        weekday: 'short', // Fri
-        year: 'numeric',
-        month: 'short', // May
-        day: '2-digit', // 31
-    };
-    const date2 = new Date(props.event.date);
-    const formattedDate = date2.toLocaleString('en-US', options);
+
+
 
 
     // const router = useRouter();
 
-    
+
     useEffect(() => {
         const updateWindowWidth = () => {
             setWindowWidth(window.innerWidth);
@@ -65,8 +80,8 @@ const EventDetails = (props) => {
     //Get lowest of all ticket prices
     const getStartingPrice = () => {
         // console.log(event, "\n");
-        // console.log(event.ticketPrice);
-        const prices = Object.values(event.ticketPrice).map(phase => phase.price);
+        // console.log(eventData.ticketPrice);
+        const prices = Object.values(eventData.ticketPrice).map(phase => phase.price);
         const minPrice = Math.min(...prices);
         return minPrice === 0 ? 'Free' : `₹${minPrice}`;
     };
@@ -81,6 +96,15 @@ const EventDetails = (props) => {
         ));
     };
 
+    if (error) {
+        return <EventNotFound />
+    }
+
+    if (isLoading) {
+        return (<div className='min-h-[100svh] min-w-[100svw]'><Loading /></div>)
+    }
+
+
     return (
         <div className="event-container bg-black">
             <div className="my-16 flex lg:flex-row flex-col-reverse gap-6">
@@ -89,19 +113,19 @@ const EventDetails = (props) => {
                 <div className="flex min-w-[50%] flex-col left gap-6">
 
                     <div className="p-0 leading-8">
-                        <h2 className="lg:ml-0 ml-3 lg:text-right text-left text-5xl font-bold mb-2">{event.title}</h2>
-                        <p className="lg:ml-0 ml-3 lg:text-right text-left font-light"><LocationOnIcon fontSize='small'/> {event.venue}</p>
-                        {<h3 className="lg:ml-0 ml-3 lg:text-right text-left text-xl text-[#00FF38]">{formattedDate}, {event.time}<span className="font-light text-sm">{isMobile?<br />:""}GMT +5:30</span></h3>}
+                        <h2 className="lg:ml-0 ml-3 lg:text-right text-left text-5xl font-bold mb-2">{eventData.title}</h2>
+                        <p className="lg:ml-0 ml-3 lg:text-right text-left font-light"><LocationOnIcon fontSize='small' /> {eventData.venue}</p>
+                        {formattedDate && <h3 className="lg:ml-0 ml-3 lg:text-right text-left text-xl text-[#00FF38]">{formattedDate}, {eventData.time}<span className="font-light text-sm">{isMobile ? <br /> : ""}GMT +5:30</span></h3>}
                         <div className="lg:ml-0 ml-3 flex lg:gap-16 gap-10 lg:justify-end">
                             {/* <p>Tag</p> */}
-                            <p>{event.city}</p>
+                            <p>{eventData.city}</p>
                         </div>
                     </div>
 
                     <div className="scroll-about-text">
                         <h3 className="lg:text-right ml-2 text-xl font-bold leading-10">About</h3>
                         <div className="overflow-scroll about-text p-4 rounded-2xl min-w-full">
-                            <p className="lg:text-right leading-7">{formatAboutText(event.about)}</p>
+                            <p className="lg:text-right leading-7">{formatAboutText(eventData.about)}</p>
                         </div>
                     </div>
                 </div>
@@ -111,7 +135,7 @@ const EventDetails = (props) => {
 
                     <div className="flyer aspect-w-1 aspect-h-1">
                         <Image
-                            src={event.imageUrl}
+                            src={eventData.imageUrl}
                             priority
                             width={900}
                             height={900}
@@ -124,7 +148,7 @@ const EventDetails = (props) => {
                             <p className="font-semibold lg:text-[0.6rem] text-[0.8rem] lg:ml-0">STARTING</p>
                             <p className="font-semibold lg:text-4xl text-6xl">{getStartingPrice()}</p>
                         </div>
-                        <Button link={`/event/${props.slug}/ticket`}/>
+                        <Button link={`/event/${props.slug}/ticket`} />
                     </div>
 
                 </div>

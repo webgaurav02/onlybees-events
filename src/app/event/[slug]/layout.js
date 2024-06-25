@@ -1,5 +1,5 @@
-
 const EventLayout = ({ children }) => {
+
   return (
     <div>
         { children }

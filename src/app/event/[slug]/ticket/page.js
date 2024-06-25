@@ -3,10 +3,7 @@
 import React, { useEffect } from 'react'
 
 //Components
-// import Navbar from '@/app/components/NavbarTicket'
-import Footer from '@/app/components/Footer'
 import TicketPage from './components/TicketPage'
-// import TicketContainer from './components/TicketContainer';
 
 //Comtext
 import { useEvent } from '@/context/EventContext';
