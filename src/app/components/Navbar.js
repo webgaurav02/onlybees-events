@@ -185,7 +185,7 @@ const Navbar = (props) => {
                 <div className="md:hidden" onClick={toggleMenu}>
                     {!isOpen && <FaBars className="text-2xl" />}
                 </div>
-                <div className={`md:flex flex-col md:flex-row items-center md:gap-3 fixed md:static top-0 right-0 h-full md:h-auto ${props.mode == "dark" ? "bg-black text-white" : "bg-[#D9D9D9] text-black"} md:bg-transparent transform ${isOpen ? 'translate-x-0' : 'translate-x-full'} md:translate-x-0 transition-transform duration-300 ease-in-out w-[70vw] md:w-auto`}>
+                <div className={`md:flex z-50 flex-col md:flex-row items-center md:gap-3 fixed md:static top-0 right-0 h-full md:h-auto ${props.mode == "dark" ? "bg-black text-white" : "bg-[#D9D9D9] text-black"} md:bg-transparent transform ${isOpen ? 'translate-x-0' : 'translate-x-full'} md:translate-x-0 transition-transform duration-300 ease-in-out w-[70vw] md:w-auto`}>
                     <div className="flex justify-end w-full md:hidden p-4">
                         <FaTimes className="text-2xl cursor-pointer" onClick={toggleMenu} />
                     </div>

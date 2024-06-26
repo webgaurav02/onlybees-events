@@ -109,7 +109,7 @@ const Home = () => {
             />
           </Link>
         </div>
-        <div ref={scrollContainerRef} className="events flex w-screen overflow-x-scroll pr-5" style={{ scrollbarWidth: 'none' }}>
+        <div ref={scrollContainerRef} className="events flex w-screen overflow-x-scroll overflow-y-clip pr-5" style={{ scrollbarWidth: 'none' }}>
           {events.map((event, index) => (
             <div key={index} className="py-3 ml-10 md:ml-7 hover:scale-105 transform transition duration-100">
               <HomeEvent
