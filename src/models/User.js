@@ -12,6 +12,8 @@ const bookingSchema = new mongoose.Schema({
   ticketDetails: [ticketDetailSchema],
   bookingDate: Date,
   orderId: { type: mongoose.Schema.Types.ObjectId, ref: 'Order' },
+  ticketId: { type: mongoose.Schema.Types.ObjectId, ref: 'Ticket' },
+  qrLink: { type: String, default: null}
 }, { _id: false });
 
 const UserSchema = new mongoose.Schema({

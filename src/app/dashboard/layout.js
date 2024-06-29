@@ -15,6 +15,7 @@ import { useRouter } from 'next/navigation';
 const Dashboard = ({ children }) => {
 
   const { user, login } = useAuth();
+  
   const [loading, setLoading] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false)
 
@@ -52,12 +53,12 @@ const Dashboard = ({ children }) => {
 
   if(loggedIn){
     return (
-      <div className='bg-white'>
-        <Navbar mode="light" />
-        <div className='bg-white min-h-[100svh] text-black'>
+      <div className='bg-black'>
+        <Navbar mode="dark" />
+        <div className='bg-black min-h-[100svh] text-black'>
           {children}
         </div>
-        <Footer mode="light"></Footer>
+        <Footer mode="dark"></Footer>
       </div>
     )
   }

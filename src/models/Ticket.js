@@ -13,6 +13,7 @@ const ticketSchema = new mongoose.Schema({
     ticketDetails: [TicketPriceSchema], // Array of ticket types, quantities, and prices
     bookingDate: { type: Date, default: Date.now },
     orderId: { type: mongoose.Schema.Types.ObjectId, ref: 'Order', required: true },
+    qrLink: { type: String, default: null },
     isUsed: { type: Boolean, default: false }, //To implement QR scanning
 });
 

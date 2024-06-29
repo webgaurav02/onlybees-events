@@ -69,21 +69,6 @@ export const POST = async (req, res) => {
         const newTicket = new Ticket({ ...ticket, user: userId });
         const newOrder = new Order({ ...orderDetails, user: userId });
 
-        await newOrder.save();
-        await newTicket.save();
-
-        // Update user's bookings
-        await User.findByIdAndUpdate(userId, {
-            $push: {
-                bookings: {
-                    eventId: ticket.event,
-                    ticketDetails: ticket.ticketDetails,
-                    bookingDate: new Date(),
-                    orderId: newOrder._id,
-                },
-            },
-        });
-
         //Calculate amount
         const amount = orderDetails.amount - (convenienceFee + platformFee);
 
@@ -131,6 +116,26 @@ export const POST = async (req, res) => {
         });
 
         const ticketId = ticket._id;
+
+        // await Ticket.findByIdAndUpdate( ticketId, { qrLink: qrCodeUrl, })
+
+        await newOrder.save();
+        await newTicket.save();
+
+        // Update user's bookings
+        await User.findByIdAndUpdate(userId, {
+            $push: {
+                bookings: {
+                    eventId: ticket.event,
+                    ticketDetails: ticket.ticketDetails,
+                    bookingDate: new Date(),
+                    orderId: newOrder._id,
+                    ticketId: ticketId,
+                    qrLink: qrCodeUrl,
+                },
+            },
+        });
+
 
         // Generate PDF from HTML
         const pdfBuffer = await generatePdfFromHtml(pdfHtml);

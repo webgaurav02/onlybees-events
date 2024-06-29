@@ -60,10 +60,6 @@ const EventSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    // quantity: {
-    //     type: Number,
-    //     required: true,
-    // },
     ticketPrice: {
         type: Map,
         of: TicketPriceSchema, // Use Map to allow dynamic keys for ticket phases

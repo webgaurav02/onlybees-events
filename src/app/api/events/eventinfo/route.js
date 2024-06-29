@@ -11,13 +11,29 @@ export const GET = async (req) => {
         // Extract the slug from the query parameters
         const { searchParams } = new URL(req.url);
         const slug = searchParams.get('slug');
+        const eventId = searchParams.get('eventId')
+        // console.log(eventId)
 
-        if (!slug) {
-            return new Response(JSON.stringify({ success: false, message: 'Slug is required!' }), { status: 400 });
+        if (!slug && !eventId) {
+            return new Response(JSON.stringify({ success: false, message: 'Slug or ID is required!' }), { status: 400 });
+        }
+
+        // const identifier = slug || eventId;
+
+        // console.log(identifier);
+
+        let event = null;
+
+        if(slug){
+            event = await Event.findOne({ slug });
+        }
+
+        else if(eventId){
+            event = await Event.findById( eventId );
         }
 
         // Fetch event from the database
-        const event = await Event.findOne({ slug });
+        // const event = await Event.findOne({ identifier });
 
         if (!event) {
             return new Response(JSON.stringify({ success: false, message: 'Invalid Event!' }), { status: 404 });
