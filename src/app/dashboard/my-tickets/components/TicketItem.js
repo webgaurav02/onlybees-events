@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from 'react'
 
 import Image from 'next/image';
-import { log } from 'handlebars';
 
 
 
@@ -65,7 +64,7 @@ const TicketItem = ({ booking }) => {
     }
 
     useEffect(() => {
-        console.log(booking);
+        // console.log(booking);
         //Fetch Event Info
         fetchEventData(booking.eventId)
         fetchOrder(booking.orderId)
@@ -97,13 +96,13 @@ const TicketItem = ({ booking }) => {
                     <p className='text-[#757575] font-light mb-4 text-[0.55rem]'>#{booking.ticketId}</p>
                 </div>
                 <div className='w-[40%] h-[40%] mr-[50px] text-center py-5'>
-                    <Image
+                    {booking.qrLink && <Image
                         src={booking.qrLink}
                         height={150}
                         width={150}
                         className="rounded-lg mx-auto"
                         alt='QR Code'
-                    />
+                    />}
                     <p className='font-light mt-5'>Presale (x1)</p>
                 </div>
 

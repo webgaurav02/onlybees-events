@@ -12,10 +12,14 @@ import { useAuth } from '@/context/AuthContext';
 //Router
 import { useRouter } from 'next/navigation';
 
+//Context
+import { AuthProvider } from '@/context/AuthContext';
+import { EventProvider } from '@/context/EventContext';
+
 const Dashboard = ({ children }) => {
 
   const { user, login } = useAuth();
-  
+
   const [loading, setLoading] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false)
 
@@ -51,14 +55,19 @@ const Dashboard = ({ children }) => {
     return <Loading />
   }
 
-  if(loggedIn){
+  if (loggedIn) {
     return (
       <div className='bg-black'>
-        <Navbar mode="dark" />
-        <div className='bg-black min-h-[100svh] text-black'>
-          {children}
-        </div>
-        <Footer mode="dark"></Footer>
+        <AuthProvider>
+          <EventProvider>
+            <Navbar mode="dark" />
+            <div className='bg-black min-h-[100svh] text-black'>
+              {children}
+            </div>
+            <Footer mode="dark"></Footer>
+          </EventProvider>
+        </AuthProvider>
+
       </div>
     )
   }

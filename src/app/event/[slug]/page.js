@@ -111,36 +111,13 @@ export async function generateMetadata({ params }) {
 export default function Event({ params }) {
 
   const { slug } = params;
-  // const [ eventData, setEventData ] = useState(null);
-  // const [ error, setError ] = useState(null);
-  // const [ isLoading, setIsLoading ] = useState(true);
-  // const { eventData, error, isLoading, fetchEventData } = useEvent();
 
-  // const fetchEventData = async (slug) => {
-  //   setIsLoading(true);
-  //   const res = await fetch(`/api/events/eventinfo?slug=${slug}`);
-  //   const dataRecv = await res.json();
-
-  //   if (!dataRecv.success) {
-  //     setIsLoading(false);
-  //     throw new Error('Event not found');
-  //   }
-  //   setIsLoading(false);
-  //   return dataRecv.data;
-  // }
-
-  // useEffect(() => {
-  //   fetchEventData(slug);
-  // }, [slug, fetchEventData]);
 
 
 
   return (
     <div className="bg-black text-white">
       <Navbar mode="dark" />
-      {/* {error && <EventNotFound />} */}
-      {/* {isLoading && <Loading />} */}
-      {/* {!error && !isLoading && eventData && <EventDetails event={eventData} slug={slug} />} */}
       <EventDetails slug={slug} />
       <Footer mode="dark" />
     </div>

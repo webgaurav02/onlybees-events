@@ -42,6 +42,7 @@ const DropdownMenu = (props) => {
 
     const handleClose = () => {
         setAnchorEl(null);
+        props.setIsOpen(false)
     };
 
 
@@ -101,11 +102,9 @@ const Navbar = (props) => {
 
     //To verify user jwt token using cookies
     const verifyUser = async () => {
-
-        if (sessionStorage.getItem('isChecked')) {
-            return;
-          }
-
+        // if (sessionStorage.getItem('isChecked')) {
+        //     return;
+        // }
         try {
             const res = await fetch('/api/auth/verify', {
                 method: 'GET',
@@ -134,8 +133,10 @@ const Navbar = (props) => {
     };
 
     useEffect(() => {
-        if (!user.userData) {
-            verifyUser();
+        if (pathname !== '/dashboard' && pathname !== '/dashboard/my-tickets'){
+            if (!user.userData) {
+                verifyUser();
+            }
         }
     }, [])
 
@@ -194,7 +195,7 @@ const Navbar = (props) => {
                     <Link href="/shop" className={`md:text-sm block md:px-4 py-3 ml-10 md:ml-0 md:py-0 hover:font-medium ${pathname === '/shop' ? 'underline underline-offset-8' : ''}`}>Shop</Link>
                     <Link href="/artist" className={`md:text-sm block md:px-4 py-3 ml-10 md:ml-0 md:py-0 hover:font-medium ${pathname === '/artist' ? 'underline underline-offset-8' : ''}`}>Artist</Link>
                     <Link href="/blog" className={`md:text-sm block md:px-4 lg:pr-5 py-3 ml-10 md:ml-0 md:py-0 hover:font-medium ${pathname === '/blog' ? 'underline underline-offset-8' : ''}`}>Blog</Link>
-                    {user.userData && <DropdownMenu mode={props.mode} handleSetLogoutModal={handleSetLogoutModal} />}
+                    {user.userData && <DropdownMenu mode={props.mode} handleSetLogoutModal={handleSetLogoutModal} setIsOpen={setIsOpen} />}
                     <div className="text-center mt-20 lg:mt-0">
                         {!user.userData && <Link href="/login" className={`md:text-xs ${props.mode == "dark" ? "bg-white text-black" : "bg-black text-white"} lg:px-8 px-12 py-2 rounded-full`} >Login</Link>}
                     </div>
