@@ -1,6 +1,7 @@
 import nodemailer from 'nodemailer';
 
 export const sendEmail = async (to, subject, htmlContent, pdfBuffer, ticketId) => {
+
     try {
         // Create a transporter
         const transporter = nodemailer.createTransport({
@@ -11,19 +12,29 @@ export const sendEmail = async (to, subject, htmlContent, pdfBuffer, ticketId) =
             },
         });
 
+        let attachments = null;
+
+        if(ticketId){
+            attachments = [
+                {
+                    filename: `ticket_${ticketId}.pdf`,
+                    content: pdfBuffer,
+                    contentType: 'application/pdf',
+                },
+            ]
+        }
+
+        if(!htmlContent){
+            htmlContent = "A new submission has been received"
+        }
+
         // Set email options
         const mailOptions = {
             from: process.env.EMAIL_USER,
             to,
             subject,
             html: htmlContent,
-            attachments: [
-                {
-                    filename: `ticket_${ticketId}.pdf`,
-                    content: pdfBuffer,
-                    contentType: 'application/pdf',
-                },
-            ],
+            attachments: attachments,
         };
 
         // Send email

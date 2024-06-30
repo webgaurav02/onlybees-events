@@ -27,7 +27,7 @@ const HomeEvent = (props) => {
             href={`/event/${props.eventItem.slug}`}
             passHref
         >
-            <div className='w-56 md:w-64 h-auto px-0'>
+            <div className='w-40 md:w-48 h-auto px-0'>
                 <Image
                     src={(props.eventItem.imageUrl !== null) ? props.eventItem.imageUrl : ""}
                     loading="lazy"

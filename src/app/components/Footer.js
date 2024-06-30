@@ -43,8 +43,8 @@ const Footer = (props) => {
                 <p className=''>&copy; Onlybees</p>
                 <div className='flex flex-col-reverse lg:flex-row lg:gap-16 gap-5'>
                     <div className='flex lg:gap-10 align-middle justify-center gap-10 px-5 lg:px-0'>
-                        <Link className='text-xs font-medium pt-1' href="/privacy">Privacy</Link>
-                        <Link className='text-xs font-medium pt-1' href="/terms">Terms of use</Link>
+                        <Link className='text-xs font-medium pt-1' href="/privacy-policy">Privacy Policy</Link>
+                        <Link className='text-xs font-medium pt-1' href="/terms-of-use">Terms of use</Link>
                         <Link className='text-xs font-medium pt-1' href="/cookies">Cookies Settings</Link>
                     </div>
                     <div className='flex lg:justify-start justify-center lg:gap-4 gap-5'>

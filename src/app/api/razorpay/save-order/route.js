@@ -110,6 +110,7 @@ export const POST = async (req, res) => {
             formattedDate: date,
             formattedMonth: month,
             formattedTime: '9:00 PM',
+            tickets: selectedTickets,
             bookingId: ticket._id,
             transactionId: orderDetails.paymentId,
             image: qrCodeUrl, // reference to the CID of the attached image
