@@ -1,5 +1,5 @@
-
-import React from 'react'
+"use effect"
+import React, { useEffect, useState } from 'react'
 
 
 //Accordion
@@ -10,6 +10,8 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import Image from 'next/image';
 
 const TicketSelection = ({ event, tickets, handleIncrement, handleDecrement }) => {
+
+    const [firstTicket, setFirstTicket] = useState([])
 
     //To get formatted date
     const options = {
@@ -22,6 +24,7 @@ const TicketSelection = ({ event, tickets, handleIncrement, handleDecrement }) =
     const formattedDate = date2.toLocaleString('en-US', options);
 
 
+    
     return (
         <div className='pt-10 pb-40 flex flex-col items-center justify-center'>
             <div className='md:w-[60vw] w-[82vw]'>
@@ -45,15 +48,15 @@ const TicketSelection = ({ event, tickets, handleIncrement, handleDecrement }) =
                 </div>
                 {/* <h1 className='text-[#00FF38] font-bold text-2xl mt-16'>TICKETS</h1> */}
                 <div className='h-fit mt-5 bg-[#121212] text-white p-3 rounded-lg'>
-                    <Accordion allowZeroExpanded>
+                    <Accordion preExpanded={[0]}>
                         {tickets.map((ticket, index) => (
-                            <AccordionItem key={index} className=" border-gray-200 ">
+                            <AccordionItem key={index} className=" border-gray-200" uuid={index}>
                                 <AccordionItemHeading className=''>
                                     <AccordionItemButton className={`flex justify-between items-center p-4 cursor-pointer ${ticket.quantity!==0 ? "" : "opacity-50" } bg-[#121212]`}>
                                         <div className="flex items-center">
                                             <div className="mr-4">
                                                 {/* <LocalActivityIcon /> */}
-                                                <ArrowDropDownIcon />
+                                                {/* <ArrowDropDownIcon /> */}
                                             </div>
                                             <div>
                                                 <h3 className="text-lg font-medium">{ticket.phaseName}</h3>
@@ -67,7 +70,7 @@ const TicketSelection = ({ event, tickets, handleIncrement, handleDecrement }) =
                                     </AccordionItemButton>
                                 </AccordionItemHeading>
                                 { ticket.quantity!==0 && <AccordionItemPanel className="">
-                                        <p className="ml-5 mb-5 text-[0.8rem] text-center font-normal">{` ${(ticket.coverCharge && ticket.coverCharge !== 0) ? `Cover : ${ticket.coverCharge}` : "No Cover"} ${(ticket.info!==null && ticket.info!=='')? ` | ${ticket.info}` : ""}`}</p>
+                                        <p className="ml-8 mb-5 text-[0.8rem] font-normal">{` ${(ticket.coverCharge && ticket.coverCharge !== 0) ? `Cover : ${ticket.coverCharge}` : "No Cover"} ${(ticket.info!==null && ticket.info!=='')? ` | ${ticket.info}` : ""}`}</p>
                                         {/* { && <p className="ml-5 mb-10 text-[1rem] font-normal">{ticket.info}</p>} */}
                                     <div className='p-4 mx-4 border bg-[#121212] border-white border-opacity-20 rounded-[15px]'>
                                         <div className="flex justify-center items-center">
