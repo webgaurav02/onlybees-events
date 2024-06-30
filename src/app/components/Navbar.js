@@ -73,8 +73,8 @@ const DropdownMenu = (props) => {
                     <span className="text-xl font-semibold text-black">Hi! {user.userData.firstname}</span>
                 </div>
                 <hr className="mb-1 border-black mx-2" />
-                <Link href="/dashboard" className="text-[#555555]"> <MenuItem className="my-2" onClick={handleClose}>Dashboard</MenuItem> </Link>
-                <Link href="/dashboard/my-tickets" className="text-[#555555]"> <MenuItem className="my-2" onClick={handleClose}>My Tickets</MenuItem> </Link>
+                <Link href="/dashboard" className="text-[#555555]"> <MenuItem onClick={handleClose}>Dashboard</MenuItem> </Link>
+                <Link href="/dashboard/my-tickets" className="text-[#555555]"> <MenuItem onClick={handleClose}>My Tickets</MenuItem> </Link>
                 <hr className="mb-1 border-black mx-2 my-2" />
                 <span
                     onClick={() => {
