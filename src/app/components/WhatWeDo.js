@@ -41,7 +41,7 @@ const WhatWeDo = () => {
                         width="0"
                         height="0"
                         sizes="80vw"
-                        className='rounded-2xl mt-2 h-full w-full object-cover'
+                        className='rounded-2xl mt-2 h-full md:w-full w-[50vw] object-cover'
                         alt='PRODUCTION'
                     />
                     <div>
@@ -55,7 +55,7 @@ const WhatWeDo = () => {
                         width="0"
                         height="0"
                         sizes="80vw"
-                        className='rounded-2xl mt-2 h-full w-full object-cover'
+                        className='rounded-2xl mt-2 h-full md:w-full w-[50vw] object-cover'
                         alt='ODR'
                     />
                     <div>
@@ -69,7 +69,7 @@ const WhatWeDo = () => {
                         width="0"
                         height="0"
                         sizes="80vw"
-                        className='rounded-2xl mt-2 h-full w-full object-cover'
+                        className='rounded-2xl mt-2 h-full md:w-full w-[50vw] object-cover'
                         alt='B.A.D - VAASTA'
                     />
                     <div>
