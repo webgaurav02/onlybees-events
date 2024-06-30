@@ -88,6 +88,7 @@ export const POST = async (req, res) => {
             eventTitle: event.title,
             venue: event.venue,
             eventDateTime: formatDate(event.date),
+            time: event.time,
             bookingDate: formatDate(newOrder.createdAt),
             tickets: selectedTickets,
             transactionId: orderDetails.paymentId,
