@@ -70,11 +70,12 @@ const DropdownMenu = (props) => {
                 }}
             >
                 <div className="px-4 py-2">
-                    <span className="text-lg font-semibold text-gray-600">Hi! {user.userData.firstname}</span>
+                    <span className="text-xl font-semibold text-black">Hi! {user.userData.firstname}</span>
                 </div>
                 <hr className="mb-1 border-black mx-2" />
-                <Link href="/dashboard"> <MenuItem onClick={handleClose}>My account</MenuItem> </Link>
-                <Link href="/dashboard/my-tickets"> <MenuItem onClick={handleClose}>My Tickets</MenuItem> </Link>
+                <Link href="/dashboard" className="text-[#555555]"> <MenuItem className="my-2" onClick={handleClose}>Dashboard</MenuItem> </Link>
+                <Link href="/dashboard/my-tickets" className="text-[#555555]"> <MenuItem className="my-2" onClick={handleClose}>My Tickets</MenuItem> </Link>
+                <hr className="mb-1 border-black mx-2 my-2" />
                 <span
                     onClick={() => {
                         props.handleSetLogoutModal();
@@ -82,7 +83,7 @@ const DropdownMenu = (props) => {
                     }}
                     className="m-0 p-0"
                 >
-                    <MenuItem className="px-2"><span className="font-bold text-sm">LOGOUT</span></MenuItem>
+                    <MenuItem className="px-2"><span className=" mx-auto font-bold text-xs bg-black text-white px-4 py-1 mt-4 rounded-full">LOGOUT</span></MenuItem>
                 </span>
             </Menu>
         </div>

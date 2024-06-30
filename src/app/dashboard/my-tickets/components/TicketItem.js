@@ -11,6 +11,7 @@ const TicketItem = ({ booking }) => {
     const [event, setEvent] = useState(null)
     const [order, setOrder] = useState(null)
     const [formattedDate, setFormattedDate] = useState(null)
+    const [tickets, setTickets] = useState('')
 
     const fetchEventData = async (eventId) => {
         try {
@@ -68,6 +69,8 @@ const TicketItem = ({ booking }) => {
         //Fetch Event Info
         fetchEventData(booking.eventId)
         fetchOrder(booking.orderId)
+        const selectedTickets = booking.ticketDetails.map(ticketItem => `${ticketItem.ticketType} (x${ticketItem.quantity})`);
+        setTickets(selectedTickets)
     }, []);
 
     useEffect(() => {
@@ -103,7 +106,7 @@ const TicketItem = ({ booking }) => {
                         className="rounded-lg mx-auto"
                         alt='QR Code'
                     />}
-                    <p className='font-light mt-5'>Presale (x1)</p>
+                    <p className='font-light mt-5'>{tickets}</p>
                 </div>
 
                 <div className='bg-black rounded-full w-[50px] h-[50px] border absolute -right-[25px]'></div>
