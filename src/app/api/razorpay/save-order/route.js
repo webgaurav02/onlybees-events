@@ -109,7 +109,7 @@ export const POST = async (req, res) => {
             venue: event.venue,
             formattedDate: date,
             formattedMonth: month,
-            formattedTime: '9:00 PM',
+            formattedTime: event.time,
             tickets: selectedTickets,
             bookingId: ticket._id,
             transactionId: orderDetails.paymentId,

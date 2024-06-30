@@ -117,7 +117,7 @@ const EventDetails = (props) => {
 
                     <div className="p-0 leading-8">
                         <h2 className="lg:ml-0 ml-3 lg:text-right text-left text-5xl font-bold mb-2">{eventData.title}</h2>
-                        <p className="lg:ml-0 ml-3 lg:text-right text-left font-light"><LocationOnIcon fontSize='small' /> {eventData.venue} <span className='text-[0.7rem]'><Link href='https://www.google.com/maps/dir//TYC+Building,+Nongkynrih,+Laitumkhrah,+Shillong,+Meghalaya+793003/@25.5712276,91.8141587,12z/data=!4m8!4m7!1m0!1m5!1m1!1s0x37507f0033cdad9d:0xb4329ef6a1988e6e!2m2!1d91.8965638!2d25.5712896?entry=ttu' className="text-[#00FF38]">view in maps</Link></span></p>
+                        <p className="lg:ml-0 ml-3 lg:text-right text-left font-light"><LocationOnIcon fontSize='small' /> {eventData.venue} <span className='text-[0.7rem]'></span></p>
                         {formattedDate && <h3 className="lg:ml-0 ml-3 lg:text-right text-left text-xl text-[#00FF38]">{formattedDate}, {eventData.time}<span className="font-light text-sm">{isMobile ? <br /> : ""}GMT +5:30</span></h3>}
                         <div className="lg:ml-0 ml-3 flex lg:gap-16 gap-10 lg:justify-end">
                             {/* <p>Tag</p> */}

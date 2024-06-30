@@ -93,7 +93,7 @@ const EventSection = () => {
     return (
         <div className='pb-5'>
             <div className='flex flex-row justify-between'>
-                <h2 className='text-black font-semibold text-3xl lg:text-3xl my-5 mb-5 mx-auto font-coolvetica uppercase'>Event</h2>
+                <h2 className='text-black font-semibold text-3xl lg:text-3xl my-5 mb-5 mx-auto font-coolvetica uppercase'>Events</h2>
             </div>
             <div ref={scrollContainerRef} className="events flex w-screen overflow-x-scroll overflow-y-clip pr-5" style={{ scrollbarWidth: 'none' }}>
                 {events.map((event, index) => (
