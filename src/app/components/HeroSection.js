@@ -14,7 +14,7 @@ import { toast, Toaster } from "react-hot-toast";
 const HeroSection = () => {
 
 
-  const [email, setEmail] = useState(null);
+  const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false)
 
   const handleSubmit = async (e) => {
