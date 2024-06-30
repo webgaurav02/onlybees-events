@@ -1,5 +1,4 @@
-"use effect"
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 
 
 //Accordion
@@ -10,8 +9,6 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import Image from 'next/image';
 
 const TicketSelection = ({ event, tickets, handleIncrement, handleDecrement }) => {
-
-    const [firstTicket, setFirstTicket] = useState([])
 
     //To get formatted date
     const options = {
